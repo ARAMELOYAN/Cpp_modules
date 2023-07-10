@@ -4,9 +4,11 @@ PhoneBook::PhoneBook()
 {
 	index = 0;
 	count = 0;
+	std::cout<<"Phonebook created\n";
 }
 
-void PhoneBook::add(std::string fname, std::string lname, std::string nname)
+void PhoneBook::add(std::string fname, std::string lname, std::string nname,
+	std::string pnumber, std::string darkness_secret)
 {
 	if (index == 8)
 		index = 0;
