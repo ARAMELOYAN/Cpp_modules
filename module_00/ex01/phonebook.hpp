@@ -2,15 +2,7 @@
 # define PHONEBOOK_HPP
 # include <iostream>
 # include <iomanip>
-
-typedef struct	s_contact
-{
-	std::string f_name;
-	std::string l_name;
-	std::string n_name;
-	std::string phone;
-	std::string secret;
-}				t_contact;
+# include "contact.hpp"
 
 class PhoneBook {
 		int		index;
