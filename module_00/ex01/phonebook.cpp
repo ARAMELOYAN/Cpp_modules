@@ -1,4 +1,4 @@
-#include "PhoneBook.hpp"
+#include "phonebook.hpp"
 
 PhoneBook::PhoneBook()
 {
@@ -8,13 +8,15 @@ PhoneBook::PhoneBook()
 }
 
 void PhoneBook::add(std::string fname, std::string lname, std::string nname,
-	std::string pnumber, std::string darkness_secret)
+		std::string phone, std::string secret)
 {
 	if (index == 8)
 		index = 0;
-	f_name[index] = fname;
-	l_name[index] = lname;
-	n_name[index] = nname;
+	contact[index].f_name = fname;
+	contact[index].l_name = lname;
+	contact[index].n_name = nname;
+	contact[index].phone = phone;
+	contact[index].secret = secret;
 	index++;
 	if (count < 8)
 		count++;
@@ -26,16 +28,16 @@ void PhoneBook::search(void)
 
 	i = 0;
 	std::cout << std::setw(10);
-	std::cout << "Index";
+		std::cout << "Index";
 	std::cout << "First Name";
 	std::cout << "Last Name";
 	std::cout << "Nickname" << std::endl;
 	while (i < count)
 	{
 		std::cout << std::setw(10);
-	   	std::cout << i;
-	   	std::cout << f_name[i];
-	   	std::cout << l_name[i];
-	   	std::cout << n_name[i] << std::endl;
+		std::cout << i;
+		std::cout << contact[i].f_name;
+		std::cout << contact[i].l_name;
+		std::cout << contact[i].n_name << std::endl;
 	}
 }
