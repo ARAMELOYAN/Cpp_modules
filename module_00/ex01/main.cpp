@@ -3,17 +3,24 @@
 
 int main(int ac, char **av)
 {
-	PhoneBook	phone;
 	std::string action;
 
 	if (ac > 1 || av[1])
 		return (0);
+	PhoneBook	phone;
+
 	while (1)
 	{
 		std::cout << "Please input action\n\t";
 		std::cin >> action;
 		if (!std::strcmp(const_cast<char *>(action.c_str()), "ADD"))
-			std::cout<< std::setw(10) << "HELLO\n";
+			phone.add();
+		else if (!std::strcmp(const_cast<char *>(action.c_str()), "SEARCH"))
+			phone.search();
+		else if (!std::strcmp(const_cast<char *>(action.c_str()), "EXIT"))
+			exit(0);
+		else
+			std::cout << "Invalid action\n";
 	}
 	return (0);
 }
