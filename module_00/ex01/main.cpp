@@ -1,5 +1,4 @@
-#include "phonebook.hpp"
-#include <iostream>
+#include "Phonebook.hpp"
 
 int main(int ac, char **av)
 {
@@ -11,7 +10,7 @@ int main(int ac, char **av)
 
 	while (1)
 	{
-		std::cout << "Please input action\n\t";
+		std::cout << "Please input action\n";
 		std::cin >> action;
 		if (!std::strcmp(const_cast<char *>(action.c_str()), "ADD"))
 			phone.add();

@@ -1,4 +1,4 @@
-#include "phonebook.hpp"
+#include "Phonebook.hpp"
 #include <unistd.h>
 
 PhoneBook::PhoneBook()
@@ -14,20 +14,20 @@ void PhoneBook::add()
 
 	if (index == 8)
 		index = 0;
-	std::cout << "\tPlease input firstname\n\t\t";
+	std::cout << "\tPlease input firstname\n\t";
 	std::cin >> fname;
-	std::cout << "\tPlease input lastneme\n\t\t";
-	std::cin >> lname;
-	std::cout << "\tPlease input nickname\n\t\t";
-	std::cin >> nname;
-	std::cout << "\tPlease input phone\n\t\t";
-	std::cin >> phone;
-	std::cout << "\tPlease input secret\n\t\t";
-	std::cin >> secret;
 	contact[index].set_fname(fname);
+	std::cout << "\tPlease input lastneme\n\t";
+	std::cin >> lname;
 	contact[index].set_lname(lname);
+	std::cout << "\tPlease input nickname\n\t";
+	std::cin >> nname;
 	contact[index].set_nname(nname);
+	std::cout << "\tPlease input phone\n\t";
+	std::cin >> phone;
 	contact[index].set_phone(phone);
+	std::cout << "\tPlease input secret\n\t";
+	std::cin >> secret;
 	contact[index].set_secret(secret);
 	index++;
 	if (count < 8)
@@ -36,13 +36,24 @@ void PhoneBook::add()
 
 void PhoneBook::search(void)
 {
-	int	i;
+	std::string j;
+	int			i;
 
 	i = 0;
-	std::cout << std::setw(15) << "Index" << std::setw(15) << "First Name" << std::setw(15) << "Last Name" << std::setw(15) << "Nickname" << std::endl;
+	std::cout << '\t' << std::setw(10) << "Index " << std::setw(10) << "First Name"
+		<< std::setw(10) << "Last Name" << std::setw(10) << "Nickname"
+		<< std::endl;
 	while (i < count)
 	{
-		contact[i].print(i);
+		contact[i].print(i + 1);
 		i++;
 	}
+	std::cout << "\tplease input contact index\n\t";
+	std::cin >> j;
+	if (j[1] || j[0] < '1' || j[0] > '9' || std::stoi(j) > count)
+	{
+		std::cout << "\tInvalid contact index\n";
+		return ;
+	}
+	contact[std::stoi(j) - 1].print_full();
 }

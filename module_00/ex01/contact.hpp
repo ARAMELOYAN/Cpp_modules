@@ -16,6 +16,7 @@ class	Contact{
 		void set_phone(std::string phon);
 		void set_secret(std::string sec);
 		void print(int i);
+		void print_full(void);
 };
 
 #endif

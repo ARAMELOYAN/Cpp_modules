@@ -1,4 +1,4 @@
-#include "contact.hpp"
+#include "Contact.hpp"
 
 void Contact::set_fname(std::string fname)
 {
@@ -27,5 +27,26 @@ void Contact::set_secret(std::string sec)
 
 void Contact::print(int index)
 {
-	std::cout << std::setw(15) << index << std::setw(15) << f_name << std::setw(15) << l_name << std::setw(15) << n_name << std::endl;
+	std::cout << '\t' << std::setw(9) << index << ' ';
+	if (f_name.length() > 9)
+		std::cout << f_name.substr(0,9) << '.';
+	else
+		std::cout << std::setw(10) << f_name;
+	if (l_name.length() > 9)
+		std::cout << l_name.substr(0,9) << '.';
+	else
+		std::cout << std::setw(10) << l_name;
+	if (n_name.length() > 9)
+		std::cout << n_name.substr(0,9) << '.' << std::endl;
+	else
+		std::cout << std::setw(10) << n_name << std::endl;
+}
+
+void Contact::print_full(void)
+{
+	std::cout << "\t\t" << f_name << std::endl;
+	std::cout << "\t\t" << l_name << std::endl;
+	std::cout << "\t\t" << n_name << std::endl;
+	std::cout << "\t\t" << phone<< std::endl;
+	std::cout << "\t\t" << secret<< std::endl;
 }
