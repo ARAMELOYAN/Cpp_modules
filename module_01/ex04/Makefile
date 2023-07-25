@@ -1,4 +1,4 @@
-NAME = Sed\ is\ for\ losers
+NAME = SedIsForLosers
 
 SRCS = $(wildcard *.cpp)
 

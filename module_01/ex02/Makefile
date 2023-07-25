@@ -1,4 +1,4 @@
-NAME = HI\ THIS\ IS\ BRAIN
+NAME = HiThisIsBrain
 
 SRCS = $(wildcard *.cpp)
 

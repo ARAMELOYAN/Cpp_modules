@@ -1,8 +1,10 @@
-NAME = UnnecessaryViolence
+NAME = Harl2.0
 
 SRCS = $(wildcard *.cpp)
 
 OBJS = $(SRCS:.cpp=.o)
+
+INCLS = $(wildcard *.hpp)
 
 RM = rm -f
 
@@ -10,7 +12,7 @@ CPP = c++
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-.cpp.o:
+.cpp.o: $(INCLS)
 	$(CPP) $(FLAGS) -c $< -o $(<:.cpp=.o)
 
 all: $(NAME)
