@@ -42,26 +42,34 @@ Fixed&	Fixed::operator = (const Fixed& fixed)
 
 Fixed	Fixed::operator + ( const Fixed& first)
 {
-	fixedValue = fixedValue + first.fixedValue; 
-	return *this;
+	Fixed c;
+
+	c.fixedValue = fixedValue + first.fixedValue; 
+	return c;
 }
 
 Fixed	Fixed::operator - ( const Fixed& first)
 {
-	fixedValue = fixedValue - first.fixedValue; 
-	return *this;
+	Fixed c;
+
+	c.fixedValue = fixedValue - first.fixedValue; 
+	return c;
 }
 
 Fixed	Fixed::operator * ( const Fixed& first)
 {
-	fixedValue = fixedValue * first.fixedValue / (1 << fracBits); 
-	return *this;
+	Fixed c;
+
+	c.fixedValue = fixedValue * first.fixedValue / (1 << fracBits); 
+	return c;
 }
 
 Fixed	Fixed::operator / ( const Fixed& first)
 {
-	fixedValue = fixedValue / first.fixedValue; 
-	return *this;
+	Fixed c;
+
+	c.fixedValue = (fixedValue * (1 << fracBits)) / first.fixedValue; 
+	return c;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

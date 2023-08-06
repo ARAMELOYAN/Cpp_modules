@@ -1,6 +1,6 @@
 #include "Point.hpp"
 
-int	area(Point const a, Point const b, Point const c)
+float	area(Point const a, Point const b, Point const c)
 {
 	Fixed	area;
 
@@ -13,7 +13,7 @@ int	area(Point const a, Point const b, Point const c)
 
 }
 
-bool bsp( Point const a, Point const b, Point const c, Point const point)
+bool	bsp( Point const a, Point const b, Point const c, Point const point)
 {
 	if (!area(a, b, point) || !area(a, c, point) || !area(c, b, point))
 		return false;
