@@ -11,7 +11,7 @@
 # include <iostream>
 
 class ClapTrap{
-		std::string	name;
+		std::string		name;
 		unsigned int	hitPoint;
 		unsigned int	energyPoint;
 		unsigned int	attackDamage;
@@ -22,9 +22,9 @@ class ClapTrap{
 		ClapTrap& operator = (const ClapTrap& obj);
 		~ClapTrap();
 
-		void		attack(const std::string& target);
-		void		takeDamage(unsigned int amount);
-		void		beRepaired(unsigned int amount);
+		void	attack(const std::string& target);
+		void			takeDamage(unsigned int amount);
+		void			beRepaired(unsigned int amount);
 
 };
 

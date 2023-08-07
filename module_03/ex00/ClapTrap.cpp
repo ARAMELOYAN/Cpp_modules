@@ -2,7 +2,8 @@
 
 ClapTrap::ClapTrap()
 {
-	std::cout << "ClapTrap Default Constructor called\n";
+	name = std::string("Chuni");
+	std::cout << RED <<  "ClapTrap Default Constructor called\n" << RESET;
 	hitPoint = 10;
 	energyPoint = 10;
 	attackDamage = 0;
@@ -10,20 +11,24 @@ ClapTrap::ClapTrap()
 
 ClapTrap::ClapTrap(std::string name):name(name)
 {
-	std::cout << "ClapTrap Parametric Constructor called\n";
+	std::cout << RED << "ClapTrap Parametric Constructor called\n" << RESET;
 	hitPoint = 10;
 	energyPoint = 10;
 	attackDamage = 0;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& obj):name(obj.name), hitPoint(obj.hitPoint),
- energyPoint(obj.energyPoint), attackDamage(obj.attackDamage)
+	energyPoint(obj.energyPoint), attackDamage(obj.attackDamage)
 {
-	std::cout << "ClapTrap copy Constructor called\n";
+	std::cout << RED << "ClapTrap copy Constructor called\n" << RESET;
 }
 
 ClapTrap& ClapTrap::operator = (const ClapTrap& obj)
 {
+
+	if (&obj == this)
+		return *this;
+	std::cout << RED << "ClapTrap Operator Assignment called\n" << RESET;
 	name = obj.name;
 	hitPoint = obj.hitPoint;
 	energyPoint = obj.energyPoint;
@@ -33,7 +38,7 @@ ClapTrap& ClapTrap::operator = (const ClapTrap& obj)
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "ClapTrap Destructor called\n";
+	std::cout << RED << "ClapTrap Destructor called\n" << RESET;
 }
 
 void	ClapTrap::attack(const std::string& target)
@@ -41,36 +46,34 @@ void	ClapTrap::attack(const std::string& target)
 	if (energyPoint != 0)
 	{
 		--energyPoint;
-		std::cout << "ClapTrap " << name << " attacks " << target << ", causing "
-			<< attackDamage << " points of damage!\n";
+		std::cout << RED << "ClapTrap " << name << " attacks " << target << ", causing "
+			<< attackDamage << " points of damage!\n" << RESET;
 		return ;
 	}
-	std::cout << "ClapTrap " << name << " haven't energy points\n";
+	std::cout << RED << "ClapTrap " << name << " haven't energy points\n" << RESET;
 }
 
 void	ClapTrap::takeDamage(unsigned int amount)
 {
-	if (attackDamage < 10)
+	if (hitPoint > 0)
 	{
-		attackDamage += amount;
-		if (attackDamage > 10)
-			attackDamage = 10;
-		std::cout << "ClapTrap " << name << " taked " << amount <<" points of damage!\n";
+		if (amount > hitPoint)
+			hitPoint = 0;
+		else
+			hitPoint -= amount;
+		std::cout << RED << "ClapTrap " << name << " lost " << amount << " hit point!\n"  << RESET;
 		return ;
 	}
-	std::cout << "ClapTrap " << name << " aren't need a points of damage!\n";
+	std::cout << RED << "ClapTrap " << name << " dead\n" << RESET;
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)
 {
-	if (hitPoint < 10)
 	{
 		--energyPoint;
 		hitPoint += amount;
-		if (hitPoint > 10)
-			hitPoint = 10;
-		std::cout << "ClapTrap " << name << " taked " << amount <<" hit point!\n";
+		std::cout << RED << "ClapTrap " << name << " taked " << amount << " hit point!\n" << RESET;
 		return ;
 	}
-	std::cout << "ClapTrap " << name << " aren't need a hit point!\n";
+	std::cout << RED << "ClapTrap " << name << " aren't need a hit point!\n" << RESET;
 }

@@ -2,7 +2,7 @@
 
 int main()
 {
-	ScavTrap a("Robert");
+	ScavTrap a;
 	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;
 	ScavTrap b("Serj");
 	std::cout << WHITE << "-------------------------------------------------------" << RESET << std::endl;

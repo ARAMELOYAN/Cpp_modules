@@ -1,12 +1,18 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap(): ClapTrap()
+FragTrap::FragTrap()
 {
+	hitPoint = 100;
+	energyPoint = 100;
+	attackDamage = 30;
 	std::cout << BLUE << "FragTrap Default Constructor Called!\n" << RESET;
 }
 
 FragTrap::FragTrap(std::string name): ClapTrap(name)
 {
+	hitPoint = 100;
+	energyPoint = 100;
+	attackDamage = 30;
 	std::cout << BLUE << "FragTrap Parametric Constructor Called!\n" << RESET;
 }
 
@@ -17,6 +23,8 @@ FragTrap::FragTrap( const FragTrap& obj):ClapTrap(obj)
 
 FragTrap& FragTrap::operator = ( const FragTrap& obj)
 {
+	if (&obj == this)
+		return *this;
 	std::cout << BLUE << "FragTrap Opeartor Assignment Called\n" << RESET;
 	name = obj.name;
 	hitPoint = obj.hitPoint;

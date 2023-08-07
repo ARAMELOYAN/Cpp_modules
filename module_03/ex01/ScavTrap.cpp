@@ -1,12 +1,18 @@
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap(): ClapTrap()
+ScavTrap::ScavTrap()
 {
+	hitPoint = 100;
+	energyPoint = 50;
+	attackDamage = 20;
 	std::cout << GREEN << "ScavTrap Default Constructor Called!\n" << RESET;
 }
 
 ScavTrap::ScavTrap(std::string name): ClapTrap(name)
 {
+	hitPoint = 100;
+	energyPoint = 50;
+	attackDamage = 20;
 	std::cout << GREEN << "ScavTrap Parametric Constructor Called!\n" << RESET;
 }
 
@@ -17,6 +23,8 @@ ScavTrap::ScavTrap( const ScavTrap& obj):ClapTrap(obj)
 
 ScavTrap& ScavTrap::operator = ( const ScavTrap& obj)
 {
+	if (&obj == this)
+		return *this;
 	std::cout << GREEN << "ScavTrap Opeartor Assignment Called\n" << RESET;
 	name = obj.name;
 	hitPoint = obj.hitPoint;
