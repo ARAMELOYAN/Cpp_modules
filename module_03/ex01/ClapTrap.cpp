@@ -4,17 +4,17 @@ ClapTrap::ClapTrap()
 {
 	name = std::string("Chuni");
 	std::cout << RED <<  "ClapTrap Default Constructor called\n" << RESET;
-	hitPoint = 10;
-	energyPoint = 10;
-	attackDamage = 0;
+	hitPoint = 100;
+	energyPoint = 50;
+	attackDamage = 20;
 }
 
 ClapTrap::ClapTrap(std::string name):name(name)
 {
 	std::cout << RED << "ClapTrap Parametric Constructor called\n" << RESET;
-	hitPoint = 10;
-	energyPoint = 10;
-	attackDamage = 0;
+	hitPoint = 100;
+	energyPoint = 50;
+	attackDamage = 20;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& obj):name(obj.name), hitPoint(obj.hitPoint),
@@ -43,14 +43,18 @@ ClapTrap::~ClapTrap()
 
 void	ClapTrap::attack(const std::string& target)
 {
-	if (energyPoint != 0)
+	if ( hitPoint > 0 )
 	{
-		--energyPoint;
-		std::cout << RED << "ClapTrap " << name << " attacks " << target << ", causing "
-			<< attackDamage << " points of damage!\n" << RESET;
-		return ;
+		if (energyPoint != 0)
+		{
+			--energyPoint;
+			std::cout << RED << "ClapTrap " << name << " attacks " << target << ", causing "
+				<< attackDamage << " points of damage!\n" << RESET;
+			return ;
+		}
+		std::cout << RED << "ClapTrap " << name << " haven't energy points\n" << RESET;
 	}
-	std::cout << RED << "ClapTrap " << name << " haven't energy points\n" << RESET;
+	std::cout << RED << "ClapTrap " << name << " dead\n" << RESET;
 }
 
 void	ClapTrap::takeDamage(unsigned int amount)
@@ -69,11 +73,12 @@ void	ClapTrap::takeDamage(unsigned int amount)
 
 void	ClapTrap::beRepaired(unsigned int amount)
 {
+	if ( energyPoint > 0 )
 	{
 		--energyPoint;
 		hitPoint += amount;
 		std::cout << RED << "ClapTrap " << name << " taked " << amount << " hit point!\n" << RESET;
 		return ;
 	}
-	std::cout << RED << "ClapTrap " << name << " aren't need a hit point!\n" << RESET;
+	std::cout << RED << "ClapTrap " << name << " haven't energy points\n" << RESET;
 }
