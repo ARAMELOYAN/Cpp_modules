@@ -2,6 +2,7 @@
 
 ScavTrap::ScavTrap()
 {
+	name = "Chuni";
 	hitPoint = 100;
 	energyPoint = 50;
 	attackDamage = 20;

@@ -2,6 +2,7 @@
 
 FragTrap::FragTrap()
 {
+	name = "Chuni";
 	hitPoint = 100;
 	energyPoint = 100;
 	attackDamage = 30;
