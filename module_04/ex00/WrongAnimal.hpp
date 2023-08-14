@@ -1,5 +1,5 @@
-#ifndef ANIMAL_HPP
-# define ANIMAL_HPP
+#ifndef WRONGANIMAL_HPP
+# define WRONGANIMAL_HPP
 # define RED	"\33[1;31m"
 # define GREEN	"\33[1;32m"
 # define YELLOW	"\33[1;33m"
@@ -10,15 +10,15 @@
 # define RESET	"\33[0;m"
 # include <iostream>
 
-class Animal{
+class WrongAnimal{
 	protected:
 		std::string		type;
 	public:
-		Animal();
-		Animal( const Animal& animal );
-		Animal& operator = ( const Animal& animal );
-		virtual ~Animal();
-		virtual void	makeSound() const;
+		WrongAnimal();
+		WrongAnimal( const WrongAnimal& animal );
+		WrongAnimal& operator = ( const WrongAnimal& animal );
+		virtual ~WrongAnimal();
+		void	makeSound() const;
 		std::string getType() const;
 };
 

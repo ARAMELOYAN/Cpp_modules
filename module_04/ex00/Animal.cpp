@@ -30,3 +30,8 @@ void Animal::makeSound() const
 {
 	std::cout << "myou? krrr? eee fsssss\n";
 }
+
+std::string Animal::getType() const
+{
+	return type;
+}

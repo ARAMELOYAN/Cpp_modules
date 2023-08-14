@@ -1,11 +1,12 @@
 #include "Dog.hpp"
 
-Dog::Dog(): Animal()
+Dog::Dog()
 {
+	type = "Dog";
 	std::cout << GREEN << "Dog Default Constructor Called\n" << RESET;
 }
 
-Dog::Dog (const Dog& dog)
+Dog::Dog (const Dog& dog): Animal(dog)
 {
 	type = dog.type;
 	std::cout << GREEN << "Dog Copy Constructor Called\n" << RESET;
