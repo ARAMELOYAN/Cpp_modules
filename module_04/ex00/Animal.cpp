@@ -6,12 +6,6 @@ Animal::Animal()
 	type = "WhoAmI???";
 }
 
-Animal::Animal( const std::string type)
-{
-	std::cout << RED << "Animal Parametric Constructor Called\n" << RESET;
-	this->type = type;
-}
-
 Animal::Animal( const Animal& animal )
 {
 	std::cout << RED << "Animal Copy Constructor Called\n" << RESET;
@@ -32,7 +26,7 @@ Animal::~Animal()
 	std::cout << RED << "Animal Destructor Called\n" << RESET;
 }
 
-void Animal::makeSound()
+void Animal::makeSound() const
 {
-	std::cout << "WOW\n";
+	std::cout << "myou? krrr? eee fsssss\n";
 }

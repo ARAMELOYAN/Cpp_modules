@@ -5,11 +5,6 @@ Cat::Cat(): Animal()
 	std::cout << GREEN << "Cat Default Constructor Called\n" << RESET;
 }
 
-Cat::Cat( std::string toys ): Animal( toys )
-{
-	std::cout << GREEN << "Cat Parametric Constructor Called\n" << RESET;
-}
-
 Cat::Cat (const Cat& cat)
 {
 	type = cat.type;
@@ -25,7 +20,12 @@ Cat& Cat::operator = ( const Cat& cat )
 	return *this;
 }
 
-void Cat::makeSound()
+Cat::~Cat()
+{
+	std::cout << GREEN << "Cat Destructor Called\n" << RESET;
+}
+
+void Cat::makeSound() const
 {
 	std::cout << GREEN << "Krrrr eee Fsssss!\n" << RESET;
 }
