@@ -11,7 +11,7 @@ int main()
 		animal[i + 5] = new Dog();
 	}
 	
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 10; i++)
 		delete animal[i];
 	return 0;
 }

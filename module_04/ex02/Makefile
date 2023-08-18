@@ -1,4 +1,4 @@
-NAME = IDon’tWantToSetDheWorldOnFire
+NAME = AbstractClass
 
 SRCS = $(wildcard *.cpp)
 

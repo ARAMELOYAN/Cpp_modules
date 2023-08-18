@@ -7,9 +7,9 @@ Dog::Dog()
 	std::cout << GREEN << "Dog Default Constructor Called\n" << RESET;
 }
 
-Dog::Dog (const Dog& dog): Animal(dog)
+Dog::Dog (const Dog& dog)
 {
-	brain = new Brain();
+	brain = new Brain(*dog.brain);
 	type = dog.type;
 	std::cout << GREEN << "Dog Copy Constructor Called\n" << RESET;
 }
@@ -18,6 +18,8 @@ Dog& Dog::operator = ( const Dog& dog )
 {
 	if (this == &dog)
 		return *this;
+	delete brain;
+	brain = new Brain(*dog.brain);
 	type = dog.type;
 	std::cout << GREEN << "Dog Operator Assignment Called\n" << RESET;
 	return *this;

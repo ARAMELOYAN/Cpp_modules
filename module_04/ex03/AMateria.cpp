@@ -1,6 +1,7 @@
-#include "AMateria_hpp"
+#include "AMateria.hpp"
+#include "ICharacter.hpp"
 
-AMateria::AMateria():type("OZON")
+AMateria::AMateria():type("GAS")
 {
 	std::cout<< RED << "AMateria default constructor called!\n" << RESET;
 }
@@ -23,7 +24,7 @@ AMateria& AMateria::operator = ( const AMateria& obj )
 	return *this;
 }
 
-AMateria::~Amateria()
+AMateria::~AMateria()
 {
 	std::cout<< RED << "AMateria destructor called!\n" << RESET;
 }
@@ -33,7 +34,8 @@ std::string const& AMateria::getType() const
 	return type;
 }
 
-void AMateria::use( ICharacter& target)
+void AMateria::use( ICharacter& target )
 {
-
+	std::cout  << RED << "What will i do target " << target.getName() << "?\n"
+		<< RESET;
 }

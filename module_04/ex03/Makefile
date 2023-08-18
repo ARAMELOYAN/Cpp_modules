@@ -1,4 +1,4 @@
-NAME = Interface&Recap
+NAME = InterfaceRecap
 
 SRCS = $(wildcard *.cpp)
 
@@ -6,7 +6,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 INCLS = $(wildcard *.hpp)
 
-RM = rm -f
+RM = rm -rf
 
 CPP = c++
 
