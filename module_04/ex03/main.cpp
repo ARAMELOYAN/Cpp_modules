@@ -7,7 +7,6 @@ int main()
 {
 	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
-	std::cout << CYAN << "HELLO" << RESET << "\n";
 	src->learnMateria(new Cure());
 	ICharacter* me = new Character("me");
 	AMateria* tmp;
@@ -18,6 +17,7 @@ int main()
 	ICharacter* bob = new Character("bob");
 	me->use(0, *bob);
 	me->use(1, *bob);
+	me->unequip(0);
 	delete bob;
 	delete me;
 	delete src;

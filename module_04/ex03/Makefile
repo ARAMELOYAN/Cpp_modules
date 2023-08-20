@@ -10,7 +10,7 @@ RM = rm -rf
 
 CPP = c++
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 .cpp.o: $(INCLS) $(SRCS)
 	$(CPP) $(FLAGS) -c $< -o $(<:.cpp=.o)

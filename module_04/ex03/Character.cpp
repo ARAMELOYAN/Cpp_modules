@@ -1,5 +1,7 @@
 #include "Character.hpp"
 
+unsigned char Character::INDEXCHACHE = 0;
+AMateria *Character::unequiped[CHACHECOUNT + 1] = { nullptr };
 Character::Character():name("WhoAmI")
 {
 	for ( int i = 0; i < 4; i++ )
@@ -20,9 +22,15 @@ Character::Character(const Character& obj): name(obj.name)
 	for (int i = 0; i < 4; i++)
 	{
 		if (obj.inventory[i])
+		{
+			delete inventory[i];
 			inventory[i] = obj.inventory[i]->clone();
+		}
 		else
+		{
+			delete inventory[i];
 			inventory[i] = nullptr;
+		}
 	}
 }
 
@@ -34,9 +42,15 @@ Character& Character::operator = ( const Character& obj )
 	for (int i = 0; i < 4; i++)
 	{
 		if (obj.inventory[i])
+		{
+			delete inventory[i];
 			inventory[i] = obj.inventory[i]->clone();
+		}
 		else
+		{
+			delete inventory[i];
 			inventory[i] = nullptr;
+		}
 	}
 	std::cout << YELLOW <<"Character operator assignment called \n" << RESET;
 	return *this;
@@ -52,7 +66,7 @@ void Character::equip(AMateria *m)
 	for (int i = 0; i < 4; i++)
 		if (!inventory[i])
 		{
-			inventory[i] = m->clone();
+			inventory[i] = m;
 			break;
 		}
 }
@@ -60,7 +74,13 @@ void Character::equip(AMateria *m)
 void Character::unequip(int idx)
 {
 	if (idx >= 0 && idx < 4)
+	{
+		if (unequiped[INDEXCHACHE])
+			delete unequiped[INDEXCHACHE];
+		unequiped[INDEXCHACHE] = inventory[idx];
 		inventory[idx] = nullptr;
+		INDEXCHACHE++;
+	}
 }
 
 void Character::use(int idx, ICharacter& target)
@@ -75,5 +95,7 @@ Character::~Character()
 
 	while ( inventory[i] )
 		delete inventory[i++];
+	for (int i = 0; i <= CHACHECOUNT && unequiped[i]; i++)
+		delete unequiped[i];
 	std::cout << YELLOW <<"Character destructor called \n" << RESET;
 }

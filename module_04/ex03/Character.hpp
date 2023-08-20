@@ -3,9 +3,12 @@
 # include "ICharacter.hpp"
 # include "AMateria.hpp"
 
+const unsigned char CHACHECOUNT = 255;
 class Character: public ICharacter{
 		std::string name;
+		static unsigned char INDEXCHACHE;
 		AMateria *inventory[4];
+		static AMateria *unequiped[CHACHECOUNT + 1];
 	public:
 		Character();
 		Character( const std::string name );

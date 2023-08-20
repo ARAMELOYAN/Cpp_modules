@@ -14,9 +14,15 @@ MateriaSource::MateriaSource( const MateriaSource& mat)
 	for (int i = 0; i < 4; i++)
 	{
 		if (mat.materia[i])
+		{
+			delete materia[i];
 			materia[i] = mat.materia[i]->clone();
+		}
 		else
+		{
+			delete materia[i];
 			materia[i] = nullptr;
+		}
 	}
 	std::cout << BLUE << "MateriaSource copy constructor called\n" << RESET;
 }
@@ -28,9 +34,15 @@ MateriaSource& MateriaSource::operator = ( const MateriaSource& mat)
 	for (int i = 0; i < 4; i++)
 	{
 		if (mat.materia[i])
+		{
+			delete materia[i];
 			materia[i] = mat.materia[i]->clone();
+		}
 		else
+		{
+			delete materia[i];
 			materia[i] = nullptr;
+		}
 	}
 	std::cout << BLUE << "MateriaSource copy assignment operator called\n"
 		<< RESET;
@@ -52,7 +64,7 @@ void MateriaSource::learnMateria(AMateria* mat)
 	{
 		if (materia[i])
 			continue;
-		materia[i] = mat->clone();
+		materia[i] = mat;
 		break;
 	}
 }
