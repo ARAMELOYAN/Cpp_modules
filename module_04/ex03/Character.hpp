@@ -6,9 +6,9 @@
 const unsigned char CHACHECOUNT = 255;
 class Character: public ICharacter{
 		std::string name;
-		static unsigned char INDEXCHACHE;
+		unsigned char INDEXCHACHE;
 		AMateria *inventory[4];
-		static AMateria *unequiped[CHACHECOUNT + 1];
+		AMateria *archive[CHACHECOUNT + 1];
 	public:
 		Character();
 		Character( const std::string name );

@@ -10,8 +10,13 @@ int main()
 	src->learnMateria(new Cure());
 	ICharacter* me = new Character("me");
 	AMateria* tmp;
-	tmp = src->createMateria("ice");
-	me->equip(tmp);
+	for (int i = 0; i < 100; i++)
+	{
+		tmp = src->createMateria("ice");
+		me->equip(tmp);
+		me->unequip(0);
+	}
+		me->equip(tmp);
 	tmp = src->createMateria("cure");
 	me->equip(tmp);
 	ICharacter* bob = new Character("bob");
