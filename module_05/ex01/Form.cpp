@@ -16,16 +16,17 @@ Form& Form::operator = (const Form& obj)
 	if (this != &obj)
 	{
 		_signed = obj._signed;
-		std::cout << BLUE << "Form copy constructor\n" << RESET;
+		std::cout << BLUE << "Form copy assignment operator\n" << RESET;
 	}
 	return *this;
 }
 
-Form::Form(std::string name, bool sig, int rS, int rE):_name(name), _signed(sig),
+Form::Form(std::string name, bool sig, unsigned char rS, unsigned char rE):_name(name), _signed(sig),
 	_requireSign(rS), _requireExec(rE)
 {
 	try
 	{
+		std::cout << BLUE << "Form parametric constructor\n" << RESET;
 		if (_requireSign > 150)
 		{
 			throw GradeTooLowException();
@@ -42,30 +43,9 @@ Form::Form(std::string name, bool sig, int rS, int rE):_name(name), _signed(sig)
 		{
 			throw GradeTooHighException();
 		}
-		std::cout << BLUE << "Form parametric constructor\n" << RESET;
 	}
 	catch (std::exception & e){
 		std::cout << BLUE << _name << " " << e.what() << RESET;
-		if (rS > 150)
-		{
-			Form obj(name, sig, 150, rE);
-			*this = obj;
-		}
-		else if (rS < 1)
-		{
-			Form obj(name, sig, 1, rE);
-			*this = obj;
-		}
-		else if (rE > 150)
-		{
-			Form obj(name, sig, rS, 150);
-			*this = obj;
-		}
-		else
-		{
-			Form obj(name, sig, rS, 1);
-			*this = obj;
-		}
 	}
 }
 
@@ -84,14 +64,34 @@ bool Form::getSigned() const
 	return _signed;
 }
 
-unsigned char Form::getRS() const
+int Form::getRS() const
 {
 	return _requireSign;
 }
 
-unsigned char Form::getRE() const
+int Form::getRE() const
 {
 	return _requireExec;
+}
+
+void Form::beSigned(Bureaucrat bur)
+{
+	if (_signed)
+		std::cout << BLUE << _name << " signed\n" << RESET;
+	else
+	{
+		try
+		{
+			if (bur.getGrade() > _requireSign)
+				throw GradeTooHighException();
+			_signed = true;
+		}
+		catch (std::exception &e)
+		{
+			std::cout << BLUE << e.what() << RESET;
+		}
+		bur.signForm(*this);
+	}
 }
 
 const char* Form::GradeTooHighException::what() const throw()
@@ -106,7 +106,7 @@ const char* Form::GradeTooLowException::what() const throw()
 
 std::ostream& operator << (std::ostream& out, const Form& obj)
 {
-	out << BLUE << "Hi. I Form. My\n_name - " << obj.getName()
+	out << BLUE << "Hi. I am " << obj.getName()
 		<< "\n_signed - " << obj.getSigned() << std::endl
 		<< "_requireSign - " << obj.getRS() << std::endl
 		<< "_requireExec - " << obj.getRE()	<< RESET << std::endl;

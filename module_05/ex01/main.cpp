@@ -3,8 +3,9 @@
 
 int main()
 {
-	Bureaucrat bur("ANUN", 151);
-	Form form("ddum", false, 130, 130);
+	Bureaucrat bur("ANUN", 141);
+	Form form("ddum", false, 140, 160);
+	form.beSigned(bur);
 	std::cout << form;
 	return 0;
 }

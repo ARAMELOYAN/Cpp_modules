@@ -80,6 +80,16 @@ int Bureaucrat::getGrade() const
 	return _grade;
 }
 
+void Bureaucrat::signForm(Form form)
+{
+	if (form.getSigned())
+		std::cout << RED << _name << " signed " << form.getName()
+			<< RESET << "\n";
+	else
+		std::cout << RED << _name << " couldn't sign " << form.getName()
+			<< " because grade is low\n" << RESET;
+}
+
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
 	return "Bureaucrat grade is HIGH\n";
