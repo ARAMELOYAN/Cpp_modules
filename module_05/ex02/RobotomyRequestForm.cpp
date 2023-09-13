@@ -33,9 +33,11 @@ void RobotomyRequestForm::execute(Bureaucrat const& bur) const
 	try
 	{
 		if (!getSigned())
-			throw signedException();
+			throw SignedException();
 		if (bur.getGrade() > getRE())
 			throw GradeTooLowException();
+		if (getExecuted())
+			throw ExecutedException();
 		makeDrillingNoice();
 		std::cout << GREEN << _target << " has been robotomised successfully 50%\n"
 			<< RESET;

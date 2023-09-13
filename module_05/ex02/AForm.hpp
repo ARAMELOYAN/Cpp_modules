@@ -15,7 +15,8 @@ class Bureaucrat;
 
 class AForm{
 		const std::string 	_name;
-		bool 				_signed;
+		mutable bool 		_signed;
+		mutable bool		_executed;
 		const unsigned char _requireSign;
 		const unsigned char _requireExec;
 		AForm();
@@ -27,12 +28,19 @@ class AForm{
 
 		const std::string 	getName() const;
 		bool 				getSigned() const;
+		bool 				getExecuted() const;
+		void 				setExecuted() const;
 		int					getRS() const;
 		int					getRE() const;
 		void				beSigned(const Bureaucrat& bur);
 		virtual void		execute(Bureaucrat const& bur) const = 0;
 
-		class signedException:public std::exception {
+		class SignedException:public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
+		class ExecutedException:public std::exception {
 			public:
 				virtual const char* what() const throw();
 		};

@@ -10,10 +10,11 @@ int main()
 		new ShrubberyCreationForm("home"),
 		new RobotomyRequestForm("Kuka"),
 		new PresidentialPardonForm ("Aram")
-};
+	};
 	for (int i = 0; i < 3; i++)
 	{
 		form[i]->beSigned(bur);
+		form[i]->execute(bur);
 		form[i]->execute(bur);
 	}
 	std::cout << *form[0];

@@ -33,9 +33,11 @@ void PresidentialPardonForm::execute(const Bureaucrat& bur) const
 	try
 	{
 		if (!getSigned())
-			throw signedException();
+			throw SignedException();
 		if (bur.getGrade() > getRE())
 			throw GradeTooLowException();
+		if (getExecuted())
+			throw ExecutedException();
 		pardon();
 		bur.executeForm(*this);
 	}
