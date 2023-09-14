@@ -21,8 +21,8 @@ Form& Form::operator = (const Form& obj)
 	return *this;
 }
 
-Form::Form(std::string name, bool sig, unsigned char rS, unsigned char rE):_name(name), _signed(sig),
-	_requireSign(rS), _requireExec(rE)
+Form::Form(std::string name, unsigned char rS, unsigned char rE):_name(name),
+	_signed(false), _requireSign(rS), _requireExec(rE)
 {
 	try
 	{

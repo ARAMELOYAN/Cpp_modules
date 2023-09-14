@@ -1,5 +1,5 @@
-#ifndef FORM_HPP
-# define FORM_HPP
+#ifndef AFORM_HPP
+# define AFORM_HPP
 # include <iostream>
 # include "Bureaucrat.hpp"
 # define RED	"\33[1;31m"
@@ -13,23 +13,37 @@
 
 class Bureaucrat;
 
-class Form{
+class AForm{
 		const std::string 	_name;
-		bool 				_signed;
+		mutable bool 		_signed;
+		mutable bool		_executed;
 		const unsigned char _requireSign;
 		const unsigned char _requireExec;
-		Form();
+		AForm();
 	public:
-		Form(const Form& bur);
-		Form& operator = (const Form& bur);
-		Form(std::string name, unsigned char rS, unsigned char rE);
-		~Form();
+		AForm(const AForm& bur);
+		AForm& operator = (const AForm& obj);
+		AForm(std::string name, unsigned char rS, unsigned char rE);
+		virtual ~AForm();
 
 		const std::string 	getName() const;
 		bool 				getSigned() const;
+		bool 				getExecuted() const;
+		void 				setExecuted() const;
 		int					getRS() const;
 		int					getRE() const;
-		void				beSigned(Bureaucrat bur);
+		void				beSigned(const Bureaucrat& bur);
+		virtual void		execute(Bureaucrat const& bur) const = 0;
+
+		class SignedException:public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
+		class ExecutedException:public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
 
 		class GradeTooHighException:public std::exception {
 			public:
@@ -42,5 +56,5 @@ class Form{
 		};
 };
 
-std::ostream& operator << (std::ostream& out, const Form &obj);
+std::ostream& operator << (std::ostream& out, const AForm &obj);
 #endif
