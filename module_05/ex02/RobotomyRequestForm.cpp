@@ -6,7 +6,7 @@ RobotomyRequestForm::RobotomyRequestForm()
 	std::cout << CYAN << "RobotomyRequestForm constructor\n" << RESET;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string target)
+RobotomyRequestForm::RobotomyRequestForm(std::string const& target)
 	:AForm("RobotomyRequestForm", 72, 45), _target(target)
 {
 	std::cout << CYAN << "RobotomyRequestForm parametric constructor\n" << RESET;

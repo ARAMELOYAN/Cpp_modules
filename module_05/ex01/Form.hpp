@@ -22,14 +22,14 @@ class Form{
 	public:
 		Form(const Form& bur);
 		Form& operator = (const Form& bur);
-		Form(std::string name, unsigned char rS, unsigned char rE);
+		Form(std::string const& name, unsigned char rS, unsigned char rE);
 		~Form();
 
-		const std::string 	getName() const;
+		std::string const& 	getName() const;
 		bool 				getSigned() const;
 		int					getRS() const;
 		int					getRE() const;
-		void				beSigned(Bureaucrat bur);
+		void				beSigned(Bureaucrat &bur);
 
 		class GradeTooHighException:public std::exception {
 			public:

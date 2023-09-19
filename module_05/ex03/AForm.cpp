@@ -25,7 +25,7 @@ AForm& AForm::operator = (const AForm& obj)
 	return *this;
 }
 
-AForm::AForm(std::string name, unsigned char rS, unsigned char rE)
+AForm::AForm(std::string const& name, unsigned char rS, unsigned char rE)
 	: _name(name), _signed(false), _executed(false), _requireSign(rS), _requireExec(rE)
 {
 	try
@@ -58,7 +58,7 @@ AForm::~AForm()
 	std::cout << YELLOW << _name + " destructor\n" << RESET;
 }
 
-const std::string AForm::getName() const
+std::string const& AForm::getName() const
 {
 	return _name;
 }

@@ -6,7 +6,7 @@ ShrubberyCreationForm::ShrubberyCreationForm()
 	std::cout << CYAN << "ShrubberyCretionForm constructor\n" << RESET;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string target)
+ShrubberyCreationForm::ShrubberyCreationForm(std::string const& target)
 	:AForm("ShrubberyCreationForm", 145, 137), _target(target)
 {
 	std::cout << CYAN << "ShrubberyCretionForm parametric constructor\n" << RESET;

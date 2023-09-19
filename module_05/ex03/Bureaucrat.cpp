@@ -18,7 +18,7 @@ Bureaucrat& Bureaucrat::operator = (const Bureaucrat& obj)
 	return *this;
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade):_name(name), _grade(grade)
+Bureaucrat::Bureaucrat(std::string const& name, int grade):_name(name), _grade(grade)
 {
 	try
 	{
@@ -70,7 +70,7 @@ Bureaucrat::~Bureaucrat()
 	std::cout << YELLOW << "Bureaucrat destructor\n" << RESET;
 }
 
-const std::string Bureaucrat::getName() const
+std::string const& Bureaucrat::getName() const
 {
 	return _name;
 }

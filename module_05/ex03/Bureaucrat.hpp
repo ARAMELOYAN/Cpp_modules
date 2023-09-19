@@ -20,10 +20,10 @@ class Bureaucrat{
 	public:
 		Bureaucrat(const Bureaucrat& bur);
 		Bureaucrat& operator = (const Bureaucrat& bur);
-		Bureaucrat(std::string name, int grade);
+		Bureaucrat(std::string const& name, int grade);
 		~Bureaucrat();
 
-		const std::string	getName() const;
+		std::string const&	getName() const;
 		int					getGrade() const;
 		void				increment();
 		void				decrement();

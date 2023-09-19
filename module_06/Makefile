@@ -1,4 +1,4 @@
-NAME = At\ least\ this\ beats\ coffee-making
+NAME = Conversion\ of\ scalar\ types
 
 SRCS = $(wildcard *.cpp)
 
@@ -10,7 +10,7 @@ RM = rm -rf
 
 CPP = c++
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 .cpp.o: $(INCLS) $(SRCS)
 	$(CPP) $(FLAGS) -c $< -o $(<:.cpp=.o)
@@ -25,7 +25,6 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) *_shrubbery
 
 re: fclean all
 

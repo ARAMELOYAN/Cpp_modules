@@ -8,7 +8,7 @@ Form::Form(): _name("Default"), _requireSign(150), _requireExec(150)
 Form::Form(const Form& obj):_name(obj._name), _signed(obj._signed), 
 	_requireSign(obj._requireSign), _requireExec(obj._requireExec)
 {
-	std::cout << BLUE << "Form copy constructor\n" << RESET;
+	std::cout << GREEN << "Form copy constructor\n" << RESET;
 }
 
 Form& Form::operator = (const Form& obj)
@@ -16,45 +16,39 @@ Form& Form::operator = (const Form& obj)
 	if (this != &obj)
 	{
 		_signed = obj._signed;
-		std::cout << BLUE << "Form copy assignment operator\n" << RESET;
+		std::cout << GREEN << "Form copy assignment operator\n" << RESET;
 	}
 	return *this;
 }
 
-Form::Form(std::string name, unsigned char rS, unsigned char rE):_name(name),
+Form::Form(std::string const& name, unsigned char rS, unsigned char rE):_name(name),
 	_signed(false), _requireSign(rS), _requireExec(rE)
 {
-	try
+	std::cout << GREEN << "Form parametric constructor\n" << RESET;
+	if (_requireSign > 150)
 	{
-		std::cout << BLUE << "Form parametric constructor\n" << RESET;
-		if (_requireSign > 150)
-		{
-			throw GradeTooLowException();
-		}
-		if (_requireSign < 1)
-		{
-			throw GradeTooHighException();
-		}
-		if (_requireExec > 150)
-		{
-			throw GradeTooLowException();
-		}
-		if (_requireExec < 1)
-		{
-			throw GradeTooHighException();
-		}
+		throw GradeTooLowException();
 	}
-	catch (std::exception & e){
-		std::cout << BLUE << _name << " " << e.what() << RESET;
+	if (_requireSign < 1)
+	{
+		throw GradeTooHighException();
+	}
+	if (_requireExec > 150)
+	{
+		throw GradeTooLowException();
+	}
+	if (_requireExec < 1)
+	{
+		throw GradeTooHighException();
 	}
 }
 
 Form::~Form()
 {
-	std::cout << BLUE << "Form destructor\n" << RESET;
+	std::cout << YELLOW << "Form destructor\n" << RESET;
 }
 
-const std::string Form::getName() const
+std::string const& Form::getName() const
 {
 	return _name;
 }
@@ -74,7 +68,7 @@ int Form::getRE() const
 	return _requireExec;
 }
 
-void Form::beSigned(Bureaucrat bur)
+void Form::beSigned(Bureaucrat &bur)
 {
 	if (_signed)
 		std::cout << BLUE << _name << " signed\n" << RESET;
@@ -83,12 +77,12 @@ void Form::beSigned(Bureaucrat bur)
 		try
 		{
 			if (bur.getGrade() > _requireSign)
-				throw GradeTooHighException();
+				throw GradeTooLowException();
 			_signed = true;
 		}
 		catch (std::exception &e)
 		{
-			std::cout << BLUE << e.what() << RESET;
+			std::cout << RED << e.what() << RESET;
 		}
 		bur.signForm(*this);
 	}

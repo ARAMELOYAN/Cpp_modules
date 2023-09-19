@@ -6,7 +6,7 @@ PresidentialPardonForm::PresidentialPardonForm()
 	std::cout << CYAN << "PresidentialPardonForm constructor\n" << RESET;
 }
 
-PresidentialPardonForm::PresidentialPardonForm(const std::string target)
+PresidentialPardonForm::PresidentialPardonForm(std::string const& target)
 	:AForm("PresidentialPardonForm", 25, 5), _target(target)
 {
 	std::cout << CYAN << "PresidentialPardonForm parametric constructor\n" << RESET;

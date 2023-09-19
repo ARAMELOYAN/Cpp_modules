@@ -23,10 +23,10 @@ class AForm{
 	public:
 		AForm(const AForm& bur);
 		AForm& operator = (const AForm& obj);
-		AForm(std::string name, unsigned char rS, unsigned char rE);
+		AForm(std::string const& name, unsigned char rS, unsigned char rE);
 		virtual ~AForm();
 
-		const std::string 	getName() const;
+		std::string const& 	getName() const;
 		bool 				getSigned() const;
 		bool 				getExecuted() const;
 		void 				setExecuted() const;

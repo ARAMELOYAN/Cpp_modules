@@ -5,7 +5,7 @@ Bureaucrat::Bureaucrat()
 
 Bureaucrat::Bureaucrat(const Bureaucrat& obj):_name(obj._name), _grade(obj._grade)
 {
-	std::cout << RED << "Bureaucrat copy constructor\n" << RESET;
+	std::cout << GREEN << "Bureaucrat copy constructor\n" << RESET;
 }
 
 Bureaucrat& Bureaucrat::operator = (const Bureaucrat& obj)
@@ -13,64 +13,32 @@ Bureaucrat& Bureaucrat::operator = (const Bureaucrat& obj)
 	if (this != &obj)
 	{
 		_grade = obj._grade;
-		std::cout << RED << "Bureaucrat copy constructor\n" << RESET;
+		std::cout << GREEN << "Bureaucrat copy constructor\n" << RESET;
 	}
 	return *this;
 }
 
 Bureaucrat::Bureaucrat(std::string name, int grade):_name(name), _grade(grade)
 {
-	try
+	if (_grade > 150)
 	{
-		if (_grade > 150)
-		{
-			_grade = 150;
-			throw GradeTooLowException();
-		}
-		if (_grade < 1)
-		{
-			_grade = 1;
-			throw GradeTooHighException();
-		}
-		std::cout << RED << "Bureaucrat parametric constructor\n" << RESET;
+		_grade = 150;
+		throw GradeTooLowException();
 	}
-	catch (std::exception & e){
-		std::cout << RED << _name << " " << e.what() << RESET;
-	}
-}
-
-void Bureaucrat::increment()
-{
-	try
+	if (_grade < 1)
 	{
-		if (_grade == 1)
-			throw GradeTooHighException();
-		_grade--;
+		_grade = 1;
+		throw GradeTooHighException();
 	}
-	catch (std::exception & e){
-		std::cout << RED << e.what() << RESET;
-	}
-}
-
-void Bureaucrat::decrement()
-{
-	try
-	{
-		if (_grade == 150)
-			throw GradeTooLowException();
-		_grade++;
-	}
-	catch (std::exception & e){
-		std::cout << RED << e.what() << RESET;
-	}
+	std::cout << GREEN << "Bureaucrat parametric constructor\n" << RESET;
 }
 
 Bureaucrat::~Bureaucrat()
 {
-	std::cout << RED << "Bureaucrat destructor\n" << RESET;
+	std::cout << YELLOW << "Bureaucrat destructor" << RESET << std::endl;
 }
 
-const std::string Bureaucrat::getName() const
+std::string const& Bureaucrat::getName() const
 {
 	return _name;
 }
@@ -82,17 +50,17 @@ int Bureaucrat::getGrade() const
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return "Bureaucrat grade is HIGH\n";
+	return "Bureaucrat rank must be below 0";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return "Bureaucrat grade is LOW\n";
+	return "Bureaucrat rank must be above 151";
 }
 
 std::ostream& operator << (std::ostream& out, const Bureaucrat& obj)
 {
-	out << RED << "Hi. I bureaucrat. My name is " << obj.getName()
+	out << GREEN << "Hi. I bureaucrat. My name is " << obj.getName()
 		<< ". I have a grade " << obj.getGrade()
 		<< RESET << std::endl;
 	return out;

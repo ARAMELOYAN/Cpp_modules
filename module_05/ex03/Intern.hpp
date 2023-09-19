@@ -13,6 +13,6 @@ class Intern
 		Intern();
 		~Intern();
 
-		AForm* makeForm(std::string name, std::string target) const;
+		AForm* makeForm(std::string const& name, std::string const& target) const;
 };
 #endif

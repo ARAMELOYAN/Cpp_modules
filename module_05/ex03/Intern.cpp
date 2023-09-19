@@ -22,7 +22,7 @@ Intern::~Intern()
 	std::cout << YELLOW << "Intern destructor\n" << RESET;
 }
 
-AForm* Intern::makeForm(std::string name, std::string target) const
+AForm* Intern::makeForm(std::string const& name, std::string const& target) const
 {
 	int iname;
 
