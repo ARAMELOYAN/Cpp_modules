@@ -39,19 +39,14 @@ void ShrubberyCreationForm::writeTree() const
 
 void ShrubberyCreationForm::execute(const Bureaucrat& bur) const
 {
-	try
-	{
-		if (!getSigned())
-			throw SignedException();
-		if (bur.getGrade() > getRE())
-			throw GradeTooLowException();
-		if (getExecuted())
-			throw ExecutedException();
-		writeTree();
-		bur.executeForm(*this);
-	}
-	catch (std::exception &e)
-	{
-		std::cout << RED << e.what() << RESET <<  std::endl;
-	}
+	if (!getSigned())
+		throw SignedException();
+	if (bur.getGrade() > getRE())
+		throw GradeTooLowException();
+	if (getExecuted())
+		throw ExecutedException();
+	std::cout << GREEN << bur.getName() << " execute " << getName()
+		<< RESET << "\n";
+	writeTree();
+	setExecuted();
 }

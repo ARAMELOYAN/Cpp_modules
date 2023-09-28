@@ -5,20 +5,26 @@
 
 int main()
 {
-	Bureaucrat bur("Burunduk", 9);
-	AForm *form[3] = {
-		new ShrubberyCreationForm("home"),
-		new RobotomyRequestForm("Kuka"),
-		new PresidentialPardonForm ("Aram")
-	};
-	for (int i = 0; i < 3; i++)
+	try
 	{
-		form[i]->beSigned(bur);
-		form[i]->execute(bur);
-		form[i]->execute(bur);
+		Bureaucrat bur("Burunduk", 9);
+		AForm *form[3] = {
+			new ShrubberyCreationForm("home"),
+			new RobotomyRequestForm("Kuka"),
+			new PresidentialPardonForm ("Aram")
+		};
+		for (int i = 0; i < 3; i++)
+		{
+			form[i]->beSigned(bur);
+			bur.executeForm(*form[i]);
+		}
+		std::cout << *form[0];
+		for (int i = 0; i < 3; i++)
+			delete form[i];
 	}
-	std::cout << *form[0];
-	for (int i = 0; i < 3; i++)
-		delete form[i];
+	catch (std::exception &e)
+	{
+		std::cout << e.what();
+	}
 	return 0;
 }

@@ -6,9 +6,9 @@ int main()
 	try
 	{
 		Bureaucrat bur("ANUN", 141);
-		Form form("ddum", 140, 160);
+		Form form("ddum", 140, 150);
 		form.beSigned(bur);
-		std::cout << form;
+		bur.increment();
 	}
 	catch (std::exception & e)
 	{

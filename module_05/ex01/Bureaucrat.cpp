@@ -20,49 +20,11 @@ Bureaucrat& Bureaucrat::operator = (const Bureaucrat& obj)
 
 Bureaucrat::Bureaucrat(std::string const& name, int grade):_name(name), _grade(grade)
 {
-	try
-	{
-		if (_grade > 150)
-		{
-			_grade = 150;
-			throw GradeTooLowException();
-		}
-		if (_grade < 1)
-		{
-			_grade = 1;
-			throw GradeTooHighException();
-		}
-		std::cout << GREEN << "Bureaucrat parametric constructor\n" << RESET;
-	}
-	catch (std::exception & e){
-		std::cout << RED << _name << " " << e.what() << RESET;
-	}
-}
-
-void Bureaucrat::increment()
-{
-	try
-	{
-		if (_grade == 1)
-			throw GradeTooHighException();
-		_grade--;
-	}
-	catch (std::exception & e){
-		std::cout << RED << e.what() << RESET;
-	}
-}
-
-void Bureaucrat::decrement()
-{
-	try
-	{
-		if (_grade == 150)
-			throw GradeTooLowException();
-		_grade++;
-	}
-	catch (std::exception & e){
-		std::cout << RED << e.what() << RESET;
-	}
+	if (_grade > 150)
+		throw GradeTooLowException();
+	if (_grade < 1)
+		throw GradeTooHighException();
+	std::cout << GREEN << "Bureaucrat parametric constructor\n" << RESET;
 }
 
 Bureaucrat::~Bureaucrat()
@@ -78,6 +40,20 @@ std::string const& Bureaucrat::getName() const
 int Bureaucrat::getGrade() const
 {
 	return _grade;
+}
+
+void Bureaucrat::increment()
+{
+	if (_grade == 1)
+		throw GradeTooHighException();
+	_grade--;
+}
+
+void Bureaucrat::decrement()
+{
+	if (_grade == 150)
+		throw GradeTooLowException();
+	_grade++;
 }
 
 void Bureaucrat::signForm(Form &form)

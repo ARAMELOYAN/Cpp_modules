@@ -41,28 +41,16 @@ Bureaucrat::Bureaucrat(std::string const& name, int grade):_name(name), _grade(g
 
 void Bureaucrat::increment()
 {
-	try
-	{
-		if (_grade == 1)
-			throw GradeTooHighException();
-		_grade--;
-	}
-	catch (std::exception & e){
-		std::cout << RED << e.what() << RESET;
-	}
+	if (_grade == 1)
+		throw GradeTooHighException();
+	_grade--;
 }
 
 void Bureaucrat::decrement()
 {
-	try
-	{
-		if (_grade == 150)
-			throw GradeTooLowException();
-		_grade++;
-	}
-	catch (std::exception & e){
-		std::cout << RED << e.what() << RESET;
-	}
+	if (_grade == 150)
+		throw GradeTooLowException();
+	_grade++;
 }
 
 Bureaucrat::~Bureaucrat()
@@ -92,9 +80,14 @@ void Bureaucrat::signForm(AForm const& form) const
 
 void Bureaucrat::executeForm(AForm const& form) const
 {
-	std::cout << GREEN << _name << " execute " << form.getName()
-		<< RESET << "\n";
-	form.setExecuted();
+	try
+	{
+		form.execute(*this);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << RED << e.what() << RESET <<  std::endl;
+	}
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
