@@ -18,7 +18,7 @@ ScalarConverter& ScalarConverter::operator = (const ScalarConverter&)
 	return *this;
 }
 
-ScalarConverter::ScalarConverter(std::string & obj)
+void ScalarConverter::convert(std::string & obj)
 {
 	std::cout << CYAN << "ScalarConverter parametric constructor" << RESET << "\n";
 	try

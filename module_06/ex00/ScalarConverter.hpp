@@ -19,13 +19,13 @@ class ScalarConverter
 		ScalarConverter();
 		ScalarConverter(const ScalarConverter& obj);
 		ScalarConverter& operator = (const ScalarConverter& obj);
-	public:
 		~ScalarConverter();
-		ScalarConverter(std::string &obj);
-		double	parse(std::string &obj);
-		void	toChar(double i);
-		void	toInt(double i);
-		void	toFloat(double i);
-		void	toDouble(double i);
+	public:
+		static	void	convert(std::string &obj);
+		static	double	parse(std::string &obj);
+		static	void	toChar(double i);
+		static	void	toInt(double i);
+		static	void	toFloat(double i);
+		static	void	toDouble(double i);
 };
 #endif
