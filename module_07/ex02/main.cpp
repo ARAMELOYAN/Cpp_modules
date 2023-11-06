@@ -2,21 +2,22 @@
 #include "Array.hpp"
 
 #define MAX_VAL 750
+#define VAR char
 int main(int, char**)
 {
-    Array<int> numbers(MAX_VAL);
-    int* mirror = new int[MAX_VAL];
+    Array<VAR> numbers(MAX_VAL);
+    VAR* mirror = new VAR[MAX_VAL];
     srand(time(NULL));
     for (int i = 0; i < MAX_VAL; i++)
     {
-        const int value = rand();
+        const VAR value = rand();
         numbers[i] = value;
         mirror[i] = value;
     }
     //SCOPE
     {
-        Array<int> tmp = numbers;
-        Array<int> test(tmp);
+        Array<VAR> tmp = numbers;
+        Array<VAR> test(tmp);
     }
 
     for (int i = 0; i < MAX_VAL; i++)
