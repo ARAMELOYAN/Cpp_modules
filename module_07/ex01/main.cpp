@@ -13,7 +13,7 @@ int main()
 }
 
 template <class T>
-void	t_pir(T a)
+void	t_pir(T& a)
 {
 	std::cout << a << '\n';
 }
