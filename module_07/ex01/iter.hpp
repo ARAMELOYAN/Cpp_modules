@@ -4,7 +4,7 @@
 template <class T>
 void	t_pir(T a);
 
-template <class T>
-void	iter(T array[], int n, void (*func)(T));
+template <class T, class P>
+void	iter(T array[], int n, void (*func)(P));
 
 #endif

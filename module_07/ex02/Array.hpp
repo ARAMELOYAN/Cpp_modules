@@ -13,7 +13,7 @@
 
 template <class T> class Array
 {
-		int _n;
+		unsigned int _n;
 		T* _array;
 	public:
 		Array();
@@ -22,7 +22,8 @@ template <class T> class Array
 		Array<T>& operator = (const Array<T>& obj);
 		~Array();
 		T&	operator [](int n);
-		int	size();
+		const T&	operator [](int n) const;
+		unsigned int	size() const;
 };
 
 #include "Array.tpp"
