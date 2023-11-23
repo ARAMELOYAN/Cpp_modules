@@ -41,27 +41,26 @@ void Span<T>::addNumber(T num)
 }
 
 	template <class T>
-void Span<T>::addNumber(T begin, T end)
+void Span<T>::addNumber(typename std::vector<T>::iterator begin, typename std::vector<T>::iterator end)
 {
-	if (begin > end)
+	if (begin >= end)
 	{
-		std::cout <<RED"Incorrect range of Numbers"RESET"\n";
+		std::cout << RED"Incorrect range of Numbers"RESET"\n";
 		return ;
 	}
 	if (currentNum == maxNum)
 		throw SpanFull();
-	if (maxNum - currentNum < static_cast<unsigned int>(end - begin + 1))
+	if (maxNum - currentNum < static_cast<unsigned int>(end - begin))
 	{
-		std::cout <<RED"Span cant include this numbers"RESET"\n";
+		std::cout << RED"Span cant include this numbers"RESET"\n";
 		return ;
 	}
-	for (T i = begin; i <= end; i++)
+	for (; begin < end; begin++)
 	{
-		span.push_back(i);
+		span.push_back(*begin);
 		currentNum++;
 	}
-	std::cout << GREEN"Numbers in range [" << begin <<
-	", " << end << "]" <<" added in span"RESET"\n";
+	std::cout << GREEN"Numbers added in span"RESET"\n";
 }
 
 	template <class T>

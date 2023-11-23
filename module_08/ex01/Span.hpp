@@ -26,7 +26,7 @@ class Span{
 		Span& operator = (Span& obj);
 		~Span();
 		void addNumber(T num);
-		void addNumber(T begin, T end);
+		void addNumber(typename std::vector<T>::iterator begin, typename std::vector<T>::iterator end);
 		class SpanFull:std::exception{
 			public:
 				virtual const char* what() const throw();
