@@ -27,8 +27,10 @@ public:
 			typename Container::iterator it;
 
 		public:
+			iterator();
 			iterator(typename Container::iterator iter);
-			// Implement necessary iterator methods
+			iterator& operator = (typename Container::iterator iter);
+			~iterator();
 			iterator& operator++();
 			iterator operator++(int);
 			iterator& operator--();

@@ -24,19 +24,38 @@ MutantStack<T, Container>::~MutantStack()
 }
 
 template <class T, class Container> 
+MutantStack<T, Container>::iterator::iterator() 
+{
+}
+
+template <class T, class Container> 
 MutantStack<T, Container>::iterator::iterator(typename Container::iterator iter) : it(iter)
 {
 }
 
 template <class T, class Container> 
-typename MutantStack<T,Container>::iterator& MutantStack<T, Container>::iterator::operator++()
+typename MutantStack<T, Container>::iterator& MutantStack<T, Container>::iterator::operator = (typename Container::iterator iter)
+{
+	if (*this == iter)
+		return ;
+	this->it = iter.it;
+	return *this;
+}
+
+template <class T, class Container> 
+MutantStack<T, Container>::iterator::~iterator()
+{
+}
+
+template <class T, class Container> 
+typename MutantStack<T, Container>::iterator& MutantStack<T, Container>::iterator::operator++()
 {
 	++it;
 	return *this;
 }
 
 template <class T, class Container> 
-typename MutantStack<T,Container>::iterator MutantStack<T, Container>::iterator::operator++(int)
+typename MutantStack<T, Container>::iterator MutantStack<T, Container>::iterator::operator++(int)
 {
 	iterator copy(*this);
 	++it;
@@ -44,14 +63,14 @@ typename MutantStack<T,Container>::iterator MutantStack<T, Container>::iterator:
 }
 
 template <class T, class Container> 
-typename MutantStack<T,Container>::iterator& MutantStack<T, Container>::iterator::operator--()
+typename MutantStack<T, Container>::iterator& MutantStack<T, Container>::iterator::operator--()
 {
 	--it;
 	return *this;
 }
 
 template <class T, class Container> 
-typename MutantStack<T,Container>::iterator MutantStack<T, Container>::iterator::operator--(int)
+typename MutantStack<T, Container>::iterator MutantStack<T, Container>::iterator::operator--(int)
 {
 	iterator copy(*this);
 	--it;
@@ -77,13 +96,13 @@ bool MutantStack<T, Container>::iterator::operator==(const iterator& other) cons
 }
 
 template <class T, class Container> 
-typename MutantStack<T,Container>::iterator MutantStack<T, Container>::begin()
+typename MutantStack<T, Container>::iterator MutantStack<T, Container>::begin()
 {
 	return iterator(this->c.begin());
 }
 
 template <class T, class Container> 
-typename MutantStack<T,Container>::iterator MutantStack<T, Container>::end()
+typename MutantStack<T, Container>::iterator MutantStack<T, Container>::end()
 {
 	return iterator(this->c.end());
 };
