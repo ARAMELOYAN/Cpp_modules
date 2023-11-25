@@ -1,4 +1,4 @@
-NAME = Container
+NAME = Easyfind
 
 SRCS = $(wildcard *.cpp)
 
