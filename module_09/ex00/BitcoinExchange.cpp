@@ -58,11 +58,34 @@ void BitcoinExchange::ReadFromFile(std::ifstream &file)
 	}
 }
 
-bool BitcoinExchange::incorrectPair(std::pair str)
+bool BitcoinExchange::iscorrectPair(std::pair& pair)
 {
-	if (str.first[4] != str.first[6] != '-')
+	if (pair.first[4] != pair.first[7] != '-')
 		return false;
-	if (str.first < DATASTART || str.first > DATAEND)
+	if (!isValidDate(pair.first))
+		return false;
+	if (pair.first < DATASTART || pair.first > DATAEND)
+		return false;
+	return true;
+}
+
+bool BitcoinExchange::isValidDate(const std::string& dateStr) {
+	std::istringstream ss = (dateStr);
+	std::tm tm = {};
+    
+	// Parse the date string into a std::tm structure
+	ss >> std::get_time(&tm, %Y-%m-%d);
+    
+	if (ss.fail()) {
+		// Parsing failed
+		return false;
+	}
+
+	// Convert std::tm to std::chrono::system_clock::time_point
+	auto tp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+
+	// Check if the conversion resulted in a valid time point
+	return tp.time_since_epoch().count() != -1;
 }
 
 #endif

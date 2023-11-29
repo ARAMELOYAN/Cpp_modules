@@ -22,7 +22,8 @@ class BitcoinExchange {
 		BitcoinExchange& operator = (const BitcoinExchange &copy);
 		~BitcoinExchange();
 		void ReadFromFile(std::ifstream& file);
-		bool incorrectPair(std::pair<std::string, std::string>) const;
-};
+		bool incorrectPair(std::pair<std::string, std::string>& pair) const;
+		bool BitcoinExchange::isValidDate(const std::string& dateStr) const 
+		};
 
 #endif
