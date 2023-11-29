@@ -18,7 +18,6 @@
 # include <string>
 # include <sstream>
 # include <iomanip>
-# include <chrono>
 # include <ctime>
 
 class BitcoinExchange {
@@ -30,7 +29,7 @@ class BitcoinExchange {
 		~BitcoinExchange();
 		void ReadFromFile(std::ifstream& file);
 		bool iscorrectPair(std::pair<std::string, std::string>& mypair) const;
-		bool BitcoinExchange::isValidDate(const std::string& dateStr) const;
+		bool isValidDate(const std::string& dateStr) const;
 		};
 
 #endif

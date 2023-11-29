@@ -58,35 +58,48 @@ void BitcoinExchange::ReadFromFile(std::ifstream &file)
 	}
 }
 
-bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& mypair)
+bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& mypair) const
 {
-	if (pair.first[4] != mypair.first[7] != '-')
+	if (mypair.first[4] != '-' || mypair.first[7] != '-')
 		return false;
-	if (!isValidDate(pair.first))
+	if (!isValidDate(mypair.first))
 		return false;
-	if (pair.first < DADE_START || mypair.first > DADE_END)
+	if (mypair.first < DATE_START || mypair.first > DATE_END)
 		return false;
 	return true;
 }
 
 bool BitcoinExchange::isValidDate(const std::string& dateStr) const
 {
-	std::istringstream ss = (dateStr);
-	std::tm tm = {};
-    
-	// Parse the date string into a std::tm structure
-	ss >> std::get_time(&tm, "%Y-%m-%d");
-    
-	if (ss.fail()) {
-		// Parsing failed
-		return false;
+	
+    std::istringstream ss(dateStr);
+    std::tm tm = {};
+
+    // Parse the date string into a std::tm structure
+    ss >> std::get_time(&tm, "%Y-%m-%d");
+
+    // Check if the parsing was successful
+    if (ss.fail()) {
+        return false;
+    }
+
+    // Check if the values are within the valid range
+    if (tm.tm_year + 1900 < 1000 || tm.tm_year + 1900 > 9999 || tm.tm_mon < 0 || tm.tm_mon > 11 || tm.tm_mday < 1 || tm.tm_mday > 31) {
+        return false;
+    }
+
+	int maxDay;
+	if (tm.tm_mon == 1) { // February
+		// Adjust for leap years
+		maxDay = (tm.tm_year % 4 == 0 && (tm.tm_year % 100 != 0 || tm.tm_year % 400 == 0)) ? 29 : 28;
+	} else {
+		// For other months
+		maxDay = (tm.tm_mon < 7) ? (tm.tm_mon % 2 == 0 ? 30 : 31) : (tm.tm_mon % 2 == 0 ? 31 : 30);
 	}
 
-	// Convert std::tm to std::chrono::system_clock::time_point
-	auto tp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
-
-	// Check if the conversion resulted in a valid time point
-	return tp.time_since_epoch().count() != -1;
+	if (tm.tm_mday > maxDay) {
+		std::cout << "Invalid day for the given month.\n";
+		return false;
+	}
+	return true;
 }
-
-#endif
