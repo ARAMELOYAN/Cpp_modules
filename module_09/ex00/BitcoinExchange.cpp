@@ -1,4 +1,4 @@
-# include "bitcoinExchange.hpp"
+# include "BitcoinExchange.hpp"
 
 BitcoinExchange::BitcoinExchange()
 {
@@ -23,7 +23,7 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy)
 	std::cout << GREEN "BTC copy constructor" RESET "\n";
 }
 
-BitcoinExchang& BitcoinExchange::operator = (const BitcoinExchange& copy)
+BitcoinExchange& BitcoinExchange::operator = (const BitcoinExchange& copy)
 {
 	if (this == &copy)
 		return *this;
@@ -45,36 +45,37 @@ void BitcoinExchange::ReadFromFile(std::ifstream &file)
 	std::string::iterator it;
 	while (!file.eof())
 	{
-		std::getine(file, name);
+		std::getline(file, name);
 		it = std::find(name.begin(), name.end(), ',');
-		if (it != name.end() && it < name.end() - 1);
+		if (it != name.end() && it < name.end() - 1)
 		{
 			str.first.append(name.begin(), it);
 			str.second.append(it + 1, name.end());
-			if (incorrectPair(str))
+			if (iscorrectPair(str))
 				continue ;
 			data.insert(str);
 		}
 	}
 }
 
-bool BitcoinExchange::iscorrectPair(std::pair& pair)
+bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& mypair)
 {
-	if (pair.first[4] != pair.first[7] != '-')
+	if (pair.first[4] != mypair.first[7] != '-')
 		return false;
 	if (!isValidDate(pair.first))
 		return false;
-	if (pair.first < DATASTART || pair.first > DATAEND)
+	if (pair.first < DADE_START || mypair.first > DADE_END)
 		return false;
 	return true;
 }
 
-bool BitcoinExchange::isValidDate(const std::string& dateStr) {
+bool BitcoinExchange::isValidDate(const std::string& dateStr) const
+{
 	std::istringstream ss = (dateStr);
 	std::tm tm = {};
     
 	// Parse the date string into a std::tm structure
-	ss >> std::get_time(&tm, %Y-%m-%d);
+	ss >> std::get_time(&tm, "%Y-%m-%d");
     
 	if (ss.fail()) {
 		// Parsing failed
