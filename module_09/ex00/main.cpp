@@ -13,5 +13,7 @@ int main(int ac, char **av)
 		catch (std::ifstream::failure e) {
 			std::cerr << "Exception opening/reading/closing filen\n";
 		}
+		BitcoinExchange btc;
 	}
+	return 0;
 }
