@@ -10,7 +10,7 @@ int main(int ac, char **av)
 			file.open (av[1]);
 			file.close();
 		}
-		catch (std::ifstream::failure e) {
+		catch (std::ifstream::failure& e) {
 			std::cerr << "Exception opening/reading/closing filen\n";
 		}
 		BitcoinExchange btc;

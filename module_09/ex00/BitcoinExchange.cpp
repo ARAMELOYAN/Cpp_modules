@@ -10,7 +10,7 @@ BitcoinExchange::BitcoinExchange()
 		file.close();
 		std::cout << GREEN "BTC constructor" RESET "\n";
 	}
-	catch (std::ifstream::failure e) {
+	catch (std::ifstream::failure& e) {
 		std::cerr << "Exception opening/reading/closing file\n";
 	}
 }
@@ -71,26 +71,31 @@ bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& mypair)
 
 bool BitcoinExchange::isValidDate(const std::string& dateStr) const
 {
-	
-    std::istringstream ss(dateStr);
-    std::tm tm = {};
-
-    // Parse the date string into a std::tm structure
-    ss >> std::get_time(&tm, "%Y-%m-%d");
-
-    // Check if the parsing was successful
-    if (ss.fail()) {
-        return false;
-    }
-
-    // Check if the values are within the valid range
-    if (tm.tm_year + 1900 < 1000 || tm.tm_year + 1900 > 9999 || tm.tm_mon < 0
-			|| tm.tm_mon > 11 || tm.tm_mday < 1 || tm.tm_mday > 31)
-        return false;
-
 	int maxDay;
+	std::istringstream ss(dateStr);
+	std::tm tm = {};
+
+	// Parse the date string into a std::tm structure manually
+	ss >> tm.tm_year; // Year
+	ss.ignore();       // Skip -
+	ss >> tm.tm_mon;  // Month
+	ss.ignore();       // Skip -
+	ss >> tm.tm_mday; // Day
+
+	// Adjust for the fact that tm_mon is zero-based
+	tm.tm_mon--;
+
+	// Check if the parsing was successful
+	if (ss.fail()) {
+		return false;
+	}
+
+	// Check if the values are within the valid range
+	if (tm.tm_year < 1000 || tm.tm_year > 9999 || tm.tm_mon < 0 || tm.tm_mon > 11 || tm.tm_mday < 1 || tm.tm_mday > 31)
+		return false;
+
 	if (tm.tm_mon == 1) { // February
-		// Adjust for leap years
+			      // Adjust for leap years
 		maxDay = (tm.tm_year % 4 == 0 && (tm.tm_year % 100 != 0 || tm.tm_year % 400 == 0)) ? 29 : 28;
 	} else {
 		// For other months
