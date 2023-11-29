@@ -84,9 +84,9 @@ bool BitcoinExchange::isValidDate(const std::string& dateStr) const
     }
 
     // Check if the values are within the valid range
-    if (tm.tm_year + 1900 < 1000 || tm.tm_year + 1900 > 9999 || tm.tm_mon < 0 || tm.tm_mon > 11 || tm.tm_mday < 1 || tm.tm_mday > 31) {
+    if (tm.tm_year + 1900 < 1000 || tm.tm_year + 1900 > 9999 || tm.tm_mon < 0
+			|| tm.tm_mon > 11 || tm.tm_mday < 1 || tm.tm_mday > 31)
         return false;
-    }
 
 	int maxDay;
 	if (tm.tm_mon == 1) { // February

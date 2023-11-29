@@ -1,4 +1,4 @@
-#include <BitcoinExchange.hpp>
+#include "BitcoinExchange.hpp"
 
 int main(int ac, char **av)
 {
@@ -11,7 +11,7 @@ int main(int ac, char **av)
 			file.close();
 		}
 		catch (std::ifstream::failure e) {
-			std::cerr << Exception opening/reading/closing filen;
+			std::cerr << "Exception opening/reading/closing filen\n";
 		}
 	}
 }
