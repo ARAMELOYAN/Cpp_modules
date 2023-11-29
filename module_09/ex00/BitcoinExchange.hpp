@@ -9,17 +9,20 @@
 # define WHITE	"\33[1;37m"
 # define RESET	"\33[0;m"
 # include <iostream>
-# include <fstream>
+# include <ifstream>
 # define FILE_NAME "data.cvs"
+# define DATASTART "2009-01-02"
+# define DATAEND "2022-03-29"
 
 class BitcoinExchange {
-		std::map<std::string, float> data;
-		
+		std::map<std::string, std::string> data;
 	public:
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange &copy);
 		BitcoinExchange& operator = (const BitcoinExchange &copy);
 		~BitcoinExchange();
+		void ReadFromFile(std::ifstream& file);
+		bool incorrectPair(std::pair<std::string, std::string>) const;
 };
 
 #endif
