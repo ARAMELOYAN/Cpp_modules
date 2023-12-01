@@ -100,7 +100,6 @@ void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
 
 bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& my_pair) const
 {
-		std::cout << my_pair.first<< std::endl;
 	if (my_pair.first[4] != '-' || my_pair.first[7] != '-')
 		return false;
 	if (!isValidDate(my_pair.first))
