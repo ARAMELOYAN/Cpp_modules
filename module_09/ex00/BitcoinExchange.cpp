@@ -39,8 +39,8 @@ BitcoinExchange::~BitcoinExchange()
 		it = std::find(name.begin(), name.end(), ',');
 		if (it != name.end() && it < name.end() - 1)
 		{
-			my_pair.first.append(name.begin(), it);
-			my_pair.second.append(it + 1, name.end());
+			my_pair.first.assign(name.begin(), it);
+			my_pair.second.assign(it + 1, name.end());
 			if (!iscorrectPair(my_pair))
 				continue ;
 			my_func(my_pair);
@@ -53,15 +53,13 @@ void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::InsertFun
 	std::pair<std::string, std::string> my_pair;
 	std::string name;
 	std::string::iterator it;
-	while (!file.eof())
+	while (std::getline(file, name))
 	{
-		std::getline(file, name);
-		std::cout << name << std::endl;
 		it = std::find(name.begin(), name.end(), ',');
-		if (it != name.end() && it < name.end() - 1)
+		if (it < name.end() - 1)
 		{
-			my_pair.first.append(name.begin(), it);
-			my_pair.second.append(it + 1, name.end());
+			my_pair.first.assign(name.begin(), it);
+			my_pair.second.assign(it + 1, name.end());
 			if (!iscorrectPair(my_pair))
 				continue ;
 			insert(my_pair);
@@ -75,14 +73,13 @@ void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::Calculate
 	std::pair<std::string, std::string> my_pair;
 	std::string name;
 	std::string::iterator it;
-	while (!file.eof())
+	while (std::getline(file, name))
 	{
-		std::getline(file, name);
 		it = std::find(name.begin(), name.end(), '|');
 		if (it != name.end() && it < name.end() - 1)
 		{
-			my_pair.first.append(name.begin(), it);
-			my_pair.second.append(it + 1, name.end());
+			my_pair.first.assign(name.begin(), it);
+			my_pair.second.assign(it + 1, name.end());
 			if (!iscorrectPair(my_pair))
 				continue ;
 			calculate(my_pair);
@@ -103,6 +100,7 @@ void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
 
 bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& my_pair) const
 {
+		std::cout << my_pair.first<< std::endl;
 	if (my_pair.first[4] != '-' || my_pair.first[7] != '-')
 		return false;
 	if (!isValidDate(my_pair.first))
