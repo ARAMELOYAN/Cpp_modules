@@ -1,4 +1,4 @@
-NAME = BTC
+NAME = btc 
 
 SRCS = $(wildcard *.cpp)
 

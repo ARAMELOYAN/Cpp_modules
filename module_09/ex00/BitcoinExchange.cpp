@@ -2,17 +2,7 @@
 
 BitcoinExchange::BitcoinExchange()
 {
-	std::ifstream file;
-	file.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
-	try {
-		file.open (FILE_NAME);
-		ReadFromFile(file);
-		file.close();
-		std::cout << GREEN "BTC constructor" RESET "\n";
-	}
-	catch (std::ifstream::failure& e) {
-		std::cerr << "Exception opening/reading/closing file\n";
-	}
+	std::cout << GREEN "BTC constructor" RESET "\n";
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy)
@@ -38,9 +28,9 @@ BitcoinExchange::~BitcoinExchange()
 }
 
 
-void BitcoinExchange::ReadFromFile(std::ifstream &file)
+/*void BitcoinExchange::ImportData(std::ifstream& file, void (*my_func)(std::pair<std::string, std::string>))
 {
-	std::pair<std::string, std::string> str;
+	std::pair<std::string, std::string> my_pair;
 	std::string name;
 	std::string::iterator it;
 	while (!file.eof())
@@ -49,22 +39,75 @@ void BitcoinExchange::ReadFromFile(std::ifstream &file)
 		it = std::find(name.begin(), name.end(), ',');
 		if (it != name.end() && it < name.end() - 1)
 		{
-			str.first.append(name.begin(), it);
-			str.second.append(it + 1, name.end());
-			if (iscorrectPair(str))
+			my_pair.first.append(name.begin(), it);
+			my_pair.second.append(it + 1, name.end());
+			if (!iscorrectPair(my_pair))
 				continue ;
-			data.insert(str);
+			my_func(my_pair);
 		}
 	}
+}*/
+
+void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::InsertFunctor insert)
+{
+	std::pair<std::string, std::string> my_pair;
+	std::string name;
+	std::string::iterator it;
+	while (!file.eof())
+	{
+		std::getline(file, name);
+		std::cout << name << std::endl;
+		it = std::find(name.begin(), name.end(), ',');
+		if (it != name.end() && it < name.end() - 1)
+		{
+			my_pair.first.append(name.begin(), it);
+			my_pair.second.append(it + 1, name.end());
+			if (!iscorrectPair(my_pair))
+				continue ;
+			insert(my_pair);
+		}
+	}
+
 }
 
-bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& mypair) const
+void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::CalculateFunctor calculate)
 {
-	if (mypair.first[4] != '-' || mypair.first[7] != '-')
+	std::pair<std::string, std::string> my_pair;
+	std::string name;
+	std::string::iterator it;
+	while (!file.eof())
+	{
+		std::getline(file, name);
+		it = std::find(name.begin(), name.end(), '|');
+		if (it != name.end() && it < name.end() - 1)
+		{
+			my_pair.first.append(name.begin(), it);
+			my_pair.second.append(it + 1, name.end());
+			if (!iscorrectPair(my_pair))
+				continue ;
+			calculate(my_pair);
+		}
+	}
+
+}
+
+void BitcoinExchange::Insert(std::pair<std::string, std::string>& my_pair)
+{
+	data.insert(my_pair);
+}
+
+void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
+{
+	std::cout << GREEN << my_pair.first << " " << my_pair.second << std::endl;
+}
+
+bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& my_pair) const
+{
+	if (my_pair.first[4] != '-' || my_pair.first[7] != '-')
 		return false;
-	if (!isValidDate(mypair.first))
+	if (!isValidDate(my_pair.first))
 		return false;
-	if (mypair.first < DATE_START || mypair.first > DATE_END)
+	if (my_pair.first < DATE_START || my_pair.first > DATE_END)
 		return false;
 	return true;
 }
