@@ -51,9 +51,9 @@ class BitcoinExchange {
 	void ImportData(std::ifstream& file, InsertFunctor insert);
 	void ImportData(std::ifstream& file, CalculateFunctor calculate);
 	//void ImportData(std::ifstream& file, void (*my_func)(std::pair<std::string, std::string>));
-	bool iscorrectPair(std::pair<std::string, std::string>& my_pair) const;
 	void Insert(std::pair<std::string, std::string>& my_pair);
 	void Calculate(std::pair<std::string, std::string>& my_pair);
-	bool isValidDate(const std::string& dateStr) const;
+	bool IsValidDate(const std::string& dateStr) const;
+	bool IsValidValue(const std::string& dateStr) const;
 };
 #endif

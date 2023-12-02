@@ -51,17 +51,26 @@ BitcoinExchange::~BitcoinExchange()
 void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::InsertFunctor insert)
 {
 	std::pair<std::string, std::string> my_pair;
-	std::string name;
+	std::string line;
 	std::string::iterator it;
-	while (std::getline(file, name))
+	std::getline(file, line);
+	if (line != "date,exchange_rate")
 	{
-		it = std::find(name.begin(), name.end(), ',');
-		if (it < name.end() - 1)
+		std::cerr << RED "ERROR: invalid file content " << line << " from " << BLUE DATA_FILE_NAME "\n" RESET;
+		throw std::ifstream::failure("invalid format");
+	}
+	while (std::getline(file, line))
+	{
+		it = std::find(line.begin(), line.end(), ',');
+		if (it < line.end() - 1)
 		{
-			my_pair.first.assign(name.begin(), it);
-			my_pair.second.assign(it + 1, name.end());
-			if (!iscorrectPair(my_pair))
+			my_pair.first.assign(line.begin(), it);
+			my_pair.second.assign(it + 1, line.end());
+			if (!IsValidDate(my_pair.first) || std::atof(my_pair.second.c_str()) < 0)
+			{
+				std::cerr << RED "ERROR: invalid data " << line << " from " << BLUE DATA_FILE_NAME "\n" RESET;
 				continue ;
+			}
 			insert(my_pair);
 		}
 	}
@@ -80,12 +89,11 @@ void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::Calculate
 		{
 			my_pair.first.assign(name.begin(), it);
 			my_pair.second.assign(it + 1, name.end());
-			if (!iscorrectPair(my_pair))
+			if (!IsValidDate(my_pair.first) || !IsValidValue(my_pair.second))
 				continue ;
 			calculate(my_pair);
 		}
 	}
-
 }
 
 void BitcoinExchange::Insert(std::pair<std::string, std::string>& my_pair)
@@ -95,26 +103,24 @@ void BitcoinExchange::Insert(std::pair<std::string, std::string>& my_pair)
 
 void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
 {
-	std::cout << GREEN << my_pair.first << " " << my_pair.second << std::endl;
+	std::cout << YELLOW << my_pair.first << " => " << my_pair.second << std::endl;
 }
 
-bool BitcoinExchange::iscorrectPair(std::pair<std::string, std::string>& my_pair) const
+bool BitcoinExchange::IsValidValue(const std::string& val_str) const
 {
-	if (my_pair.first[4] != '-' || my_pair.first[7] != '-')
-		return false;
-	if (!isValidDate(my_pair.first))
-		return false;
-	if (my_pair.first < DATE_START || my_pair.first > DATE_END)
+	if (std::atof(val_str.c_str()) > 1000 || std::atof(val_str.c_str()) < 0)
 		return false;
 	return true;
 }
 
-bool BitcoinExchange::isValidDate(const std::string& dateStr) const
+bool BitcoinExchange::IsValidDate(const std::string& date_str) const
 {
 	int maxDay;
-	std::istringstream ss(dateStr);
+	std::istringstream ss(date_str);
 	std::tm tm = {};
 
+	if (date_str[4] != '-' || date_str[7] != '-')
+		return false;
 	// Parse the date string into a std::tm structure manually
 	ss >> tm.tm_year; // Year
 	ss.ignore();       // Skip -
@@ -139,12 +145,15 @@ bool BitcoinExchange::isValidDate(const std::string& dateStr) const
 		maxDay = (tm.tm_year % 4 == 0 && (tm.tm_year % 100 != 0 || tm.tm_year % 400 == 0)) ? 29 : 28;
 	} else {
 		// For other months
-		maxDay = (tm.tm_mon < 7) ? (tm.tm_mon % 2 == 0 ? 30 : 31) : (tm.tm_mon % 2 == 0 ? 31 : 30);
+		maxDay = (tm.tm_mon < 7) ? (tm.tm_mon % 2 == 0 ? 31 : 30) : (tm.tm_mon % 2 == 0 ? 30 : 31);
 	}
 
-	if (tm.tm_mday > maxDay) {
-		std::cout << "Invalid day for the given month.\n";
+	if (tm.tm_mday > maxDay)
+	{
+		std::cout << maxDay<< std::endl;
 		return false;
 	}
+	if (date_str < DATE_START || date_str > DATE_END)
+		return false;
 	return true;
 }
