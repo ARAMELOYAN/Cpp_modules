@@ -103,7 +103,18 @@ void BitcoinExchange::Insert(std::pair<std::string, std::string>& my_pair)
 
 void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
 {
-	std::cout << YELLOW << my_pair.first << " => " << my_pair.second << std::endl;
+	if (*(my_pair.first.end() - 1) == ' ')
+		my_pair.first.erase(my_pair.first.end() - 1);
+	std::map<std::string, std::string>::iterator it = data.find(my_pair.first);
+	if (it != data.end())
+		std::cout << YELLOW << my_pair.first << " => " << my_pair.second << " " RED << std::atof(my_pair.second.c_str()) * std::atof(it->second.c_str()) << RESET "\n";
+	else
+	{
+		std::map<std::string, std::string>::iterator it = data.begin();
+		while (my_pair.first < it->first && it != data.end())
+			++it;
+		std::cout << YELLOW << my_pair.first << " => " << my_pair.second << " " RED << std::atof(my_pair.second.c_str()) * std::atof(it->second.c_str()) << RESET "\n";
+	}
 }
 
 bool BitcoinExchange::IsValidValue(const std::string& val_str) const
