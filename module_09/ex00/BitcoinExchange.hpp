@@ -8,9 +8,15 @@
 # define CYAN	"\33[1;36m"
 # define WHITE	"\33[1;37m"
 # define RESET	"\33[0;m"
-# define DATA_FILE_NAME "data.csv"
-# define DATE_START "2009-01-02"
-# define DATE_END "2022-03-29"
+# ifndef DATA_FILE_NAME
+#  define DATA_FILE_NAME "data.csv"
+# endif
+# ifndef DATE_START
+#  define DATE_START "2009-01-02"
+# endif
+# ifndef DATE_END 
+#  define DATE_END "2022-03-29"
+# endif
 # include <iostream>
 # include <algorithm>
 # include <map>
