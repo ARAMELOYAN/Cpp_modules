@@ -7,8 +7,6 @@ BitcoinExchange::BitcoinExchange()
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& copy)
 {
-	if (this == &copy)
-		return ;
 	this->data = copy.data;
 	std::cout << GREEN "BTC copy constructor" RESET "\n";
 }

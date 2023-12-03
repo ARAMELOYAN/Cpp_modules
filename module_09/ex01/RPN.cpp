@@ -54,7 +54,7 @@ RPN::RPN(std::string str)
 	if (data.size() != 1)
 			throw std::runtime_error("Error: invalid expression");
 	std::cout << GREEN "RPN parametric constructor" RESET "\n";
-	std::cout << GREEN << data.top() << RESET "\n";
+	std::cout << BLUE << data.top() << RESET "\n";
 }
 
 RPN::~RPN()
