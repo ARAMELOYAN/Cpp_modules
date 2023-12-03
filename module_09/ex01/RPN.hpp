@@ -9,15 +9,18 @@
 # define WHITE	"\33[1;37m"
 # define RESET	"\33[0;m"
 # include <iostream>
+# include <stack>
+# include <algorithm>
+# include <stdexcept>
 
 class RPN
 {
 		std::stack<int> data;
+		RPN(const RPN&);
+		RPN& operator = (const RPN&);
 	public:
-		RPN():
-		RPN(const std::string& str):
-		RPN(const RPN& copy):
-		RPN& operator = (const RPN& copy):
-		~RPN():
+		RPN();
+		RPN(std::string str);
+		~RPN();
 };
 #endif
