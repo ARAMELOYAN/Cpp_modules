@@ -17,32 +17,18 @@ RPN::RPN(std::string str)
 			data.push(*token - 48);
 		else if (tokens.find(*token) != std::string::npos && data.size() > 1)
 		{
+			int val = data.top();
+			data.pop();
 			if (*token == '+')
-			{
-				int val = data.top();
-				data.pop();
 				data.top() += val;
-			}
 			else if (*token == '-')
-			{
-				int val = data.top();
-				data.pop();
 				data.top() -= val;
-			}
 			else if (*token == '*')
-			{
-				int val = data.top();
-				data.pop();
 				data.top() *= val;
-			}
 			else
 			{
-				if (data.top() != 0)
-				{
-					int val = data.top();
-					data.pop();
+				if (val != 0)
 					data.top() /= val;
-				}
 				else
 					throw std::runtime_error("Error: devide by zero");
 			}
