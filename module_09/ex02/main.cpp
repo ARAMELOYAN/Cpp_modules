@@ -21,25 +21,27 @@ int main(int ac, char **av)
 			}
 			n++;	
 		}
-		std::cout << "vector before: ";
+		if (vec.empty())
+			throw std::runtime_error("Invalid argument");
+		std::cout << GREEN "vector before: " RESET;
 		PmergeMe<std::vector<int> >::print(vec);
 		clock_t start_time = clock();
 		PmergeMe<std::vector<int> >::MergeInsertionSort(vec);
 		clock_t end_time = clock();
-		std::cout << "vector after: ";
+		std::cout << GREEN "vector after: " RESET;
 		PmergeMe<std::vector<int> >::print(vec);
 		double elapsed_time_usec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 		std::cout << std::fixed;
-		std::cout << "Time to process a range of " << vec.size() << " elements with std::vector<int> "<< elapsed_time_usec << " seconds" << std::endl;
-		std::cout << "deque before: ";
+		std::cout << GREEN "Time to process a range of " BLUE << vec.size() << GREEN " elements with std::vector<int> " BLUE << elapsed_time_usec << GREEN " seconds" RESET << std::endl;
+		std::cout << GREEN "deque before: " RESET;
 		PmergeMe<std::deque<int> >::print(deq);
 		start_time = clock();
 		PmergeMe<std::deque<int> >::MergeInsertionSort(deq);
 		end_time = clock();
-		std::cout << "deque after: ";
+		std::cout << GREEN "deque after: " RESET;
 		PmergeMe<std::deque<int> >::print(deq);
 		elapsed_time_usec = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-		std::cout << "Time to process a range of " << deq.size() << " elements with std::deque<int> "<< elapsed_time_usec << " seconds" << std::endl;
+		std::cout << GREEN "Time to process a range of " BLUE << deq.size() << GREEN " elements with std::deque<int> " BLUE << elapsed_time_usec << GREEN " seconds" RESET << std::endl;
 	}
 	catch (std::exception& e)
 	{

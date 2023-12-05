@@ -25,27 +25,6 @@ BitcoinExchange::~BitcoinExchange()
 	std::cout << GREEN "BTC destructor" RESET "\n";
 }
 
-
-/*void BitcoinExchange::ImportData(std::ifstream& file, void (*my_func)(std::pair<std::string, std::string>))
-{
-	std::pair<std::string, std::string> my_pair;
-	std::string name;
-	std::string::iterator it;
-	while (!file.eof())
-	{
-		std::getline(file, name);
-		it = std::find(name.begin(), name.end(), ',');
-		if (it != name.end() && it < name.end() - 1)
-		{
-			my_pair.first.assign(name.begin(), it);
-			my_pair.second.assign(it + 1, name.end());
-			if (!iscorrectPair(my_pair))
-				continue ;
-			my_func(my_pair);
-		}
-	}
-}*/
-
 void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::InsertFunctor insert)
 {
 	std::pair<std::string, std::string> my_pair;
@@ -80,17 +59,28 @@ void BitcoinExchange::ImportData(std::ifstream& file, BitcoinExchange::Calculate
 	std::pair<std::string, std::string> my_pair;
 	std::string name;
 	std::string::iterator it;
+	std::getline(file, name);
+	if (name != "date | value")
+	{
+		std::cerr << RED "ERROR: invalid file content " << name << " from input file" RESET "\n";
+		throw std::ifstream::failure("invalid format");
+	}
 	while (std::getline(file, name))
 	{
+		name.erase(std::remove(name.begin(), name.end(), ' '), name.end());
 		it = std::find(name.begin(), name.end(), '|');
-		if (it != name.end() && it < name.end() - 1)
+		if (it < name.end() - 1)
 		{
 			my_pair.first.assign(name.begin(), it);
 			my_pair.second.assign(it + 1, name.end());
 			if (!IsValidDate(my_pair.first) || !IsValidValue(my_pair.second))
+			{
 				continue ;
+			}
 			calculate(my_pair);
 		}
+		else
+			std::cout << RED "Error: bad input => " << name << RESET "\n";
 	}
 }
 
@@ -101,15 +91,13 @@ void BitcoinExchange::Insert(std::pair<std::string, std::string>& my_pair)
 
 void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
 {
-	if (*(my_pair.first.end() - 1) == ' ')
-		my_pair.first.erase(my_pair.first.end() - 1);
 	std::map<std::string, std::string>::iterator it = data.find(my_pair.first);
 	if (it != data.end())
 		std::cout << YELLOW << my_pair.first << " => " << my_pair.second << " " RED << std::atof(my_pair.second.c_str()) * std::atof(it->second.c_str()) << RESET "\n";
 	else
 	{
 		std::map<std::string, std::string>::iterator it = data.begin();
-		while (my_pair.first < it->first && it != data.end())
+		while (my_pair.first > it->first && it != data.end())
 			++it;
 		std::cout << YELLOW << my_pair.first << " => " << my_pair.second << " " RED << std::atof(my_pair.second.c_str()) * std::atof(it->second.c_str()) << RESET "\n";
 	}
@@ -117,8 +105,16 @@ void BitcoinExchange::Calculate(std::pair<std::string, std::string>& my_pair)
 
 bool BitcoinExchange::IsValidValue(const std::string& val_str) const
 {
-	if (std::atof(val_str.c_str()) > 1000 || std::atof(val_str.c_str()) < 0)
+	if (std::atof(val_str.c_str()) < 0)
+	{
+		std::cout << RED "Error: not a positive number." << RESET "\n";
 		return false;
+	}
+	if (std::atof(val_str.c_str()) > 1000 || std::atof(val_str.c_str()) < 0)
+	{
+		std::cout << RED "Error: too large a number." << RESET "\n";
+		return false;
+	}
 	return true;
 }
 
@@ -129,40 +125,43 @@ bool BitcoinExchange::IsValidDate(const std::string& date_str) const
 	std::tm tm = {};
 
 	if (date_str[4] != '-' || date_str[7] != '-')
+	{
+		std::cout << RED "Error: bad date => " << date_str << RESET "\n";
 		return false;
-	// Parse the date string into a std::tm structure manually
-	ss >> tm.tm_year; // Year
-	ss.ignore();       // Skip -
-	ss >> tm.tm_mon;  // Month
-	ss.ignore();       // Skip -
-	ss >> tm.tm_mday; // Day
+	}
+	ss >> tm.tm_year;
+	ss.ignore();
+	ss >> tm.tm_mon;
+	ss.ignore();
+	ss >> tm.tm_mday;
 
-	// Adjust for the fact that tm_mon is zero-based
 	tm.tm_mon--;
 
-	// Check if the parsing was successful
 	if (ss.fail()) {
+		std::cout << RED "Error: bad date => " << date_str << RESET "\n";
 		return false;
 	}
 
-	// Check if the values are within the valid range
 	if (tm.tm_year < 1000 || tm.tm_year > 9999 || tm.tm_mon < 0 || tm.tm_mon > 11 || tm.tm_mday < 1 || tm.tm_mday > 31)
+	{
+		std::cout << RED "Error: bad date => " << date_str << RESET "\n";
 		return false;
-
+	}
 	if (tm.tm_mon == 1) { // February
-			      // Adjust for leap years
 		maxDay = (tm.tm_year % 4 == 0 && (tm.tm_year % 100 != 0 || tm.tm_year % 400 == 0)) ? 29 : 28;
 	} else {
-		// For other months
 		maxDay = (tm.tm_mon < 7) ? (tm.tm_mon % 2 == 0 ? 31 : 30) : (tm.tm_mon % 2 == 0 ? 30 : 31);
 	}
 
 	if (tm.tm_mday > maxDay)
 	{
-		std::cout << maxDay<< std::endl;
+		std::cout << RED "Error: bad date => " << date_str << RESET "\n";
 		return false;
 	}
 	if (date_str < DATE_START || date_str > DATE_END)
+	{
+		std::cout << RED "Error: bad date => " << date_str << RESET "\n";
 		return false;
+	}
 	return true;
 }

@@ -86,11 +86,14 @@ class PmergeMe
 	{
 		int i = 0;
 		typename Container::iterator it = vec.begin();
+		std::cout << BLUE;
 		while (it < vec.end() && ++i < 6)
-		{
 			std::cout << *it++ << " ";
-		}
-		std::cout << "[...]\n";
+		std::cout << RESET;
+		if (it < vec.end())
+			std::cout << "[...]\n";
+		else
+			std::cout << "\n";
 	}
 };
 
