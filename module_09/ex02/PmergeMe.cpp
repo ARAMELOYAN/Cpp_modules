@@ -1,13 +1,21 @@
 #include "PmergeMe.hpp"
-#include <string>
 
-PmergeMe::PmergeMe(std::vector<int> vec)
+void PmergeMe::MergeInsertionSort(std::vector<int>& vec)
 {
-	
-	std::cout << GREEN "PmergeMe parametric constructor" RESET "\n";
+	int n = vec.size();
+	if (n < 20)
+		InsertionSort(vec);
+	else
+	{
+		std::vector<int> vec1(vec.begin(), vec.begin() + (n / 2) + 1);
+		std::vector<int> vec2(vec.begin() + (n / 2) + 1, vec.end());
+		MergeInsertionSort(vec1);
+		MergeInsertionSort(vec2);
+		Merge(vec1, vec2);
+	}
 }
 
-PmergeMe::~PmergeMe()
+void PmergeMe::InsertionSort(std::vector<int>& vec)
 {
-	std::cout << GREEN "PmergeMe destructor" RESET "\n";
+
 }
