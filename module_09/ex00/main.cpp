@@ -27,5 +27,7 @@ int main(int ac, char **av)
 			file.clear();
 		}
 	}
+	else
+		std::cout << RED "Error: invalid argument count\n" RESET;
 	return 0;
 }

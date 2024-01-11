@@ -15,7 +15,7 @@
 
 class RPN
 {
-		std::stack<int> data;
+		std::stack<double> data;
 		RPN(const RPN&);
 		RPN& operator = (const RPN&);
 	public:
